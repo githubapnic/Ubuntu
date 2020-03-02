@@ -17,3 +17,7 @@ To see the output from the removal of the packages
 
 `cat packagelist_removal.log`
 
+To check if packages are installed
+
+`dpkg -l $(cat packagelist)`
+
