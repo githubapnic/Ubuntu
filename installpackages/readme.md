@@ -15,7 +15,7 @@ This script is designed to work on Ubuntu 18.04 LTS. It should be run under root
 ## Installation
 Change to root user (if necessary) and clone Git repository:
 ```
-sudo git clone https://github.com/githubapnic/Ubuntu.git
+git clone https://github.com/githubapnic/Ubuntu.git
 ```
 Enter the new directory, change variables , update permissions, and run install_packages.sh, answer the questions:
 ```
