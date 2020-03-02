@@ -73,6 +73,16 @@ function installGNS3-GUI()
   checkSuccess gns3
 }
 
+#Install GNS3-IOU
+function installGNS3-IOU()
+{
+  echo "####### Installing GNS3 IOU" | tee -a $LOG_FILE
+  dpkg --add-architecture i386 >> $LOG_FILE
+  apt-get update -qq >> $LOG_FILE
+  apt-get install gns3-iou:i386 >> $LOG_FILE
+  checkSuccess gns3-iou
+}
+
 
 #Install docker
 function installDocker()
@@ -171,6 +181,7 @@ checkRoot
 updatePackages
 installGNS3
 installGNS3-GUI
+installGNS3-IOU
 installDocker
 installDynamips
 installDynagen
