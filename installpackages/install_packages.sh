@@ -17,14 +17,7 @@ CONFIG_DIR="$HOME/.config"
 LOG_FILE="install.log"
 VPCS_URL="http://sourceforge.net/projects/vpcs/files/0.8/vpcs_0.8b_Linux64/download"
 
-printf "Enter username: "
-read user
 
-printf "\nEnter password: "
-read password
-
-GNS_USER=$user
-GNS_PASS=$password
 GNS_PORT="3080"
 #GNS_VERS="2.1.8"
 GNS_VERS="2.2.5"
@@ -54,6 +47,7 @@ function updatePackages()
   echo "###### Updating Packages" | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
   apt-get upgrade -qq >> $LOG_FILE
+  echo "###### Installing New Packages" 
   apt-get install -qq $(cat packagelist) >> $LOG_FILE
   dpkg -l $(cat packagelist) &> /dev/null && echo "Success!" 
 }
@@ -70,6 +64,9 @@ function installGNS3-GUI()
 {
   echo "####### Installing GNS3 GUI" | tee -a $LOG_FILE
   pip3 install -q gns3-gui==$GNS_VERS >> $LOG_FILE
+  sudo cp /usr/local/share/applications/gns3.desktop ~/Desktop/.
+  sudo chmod +x ~/Desktop/gns3.desktop
+  sudo chown ${USER} ~/Desktop/gns3.desktop
   checkSuccess gns3
 }
 
@@ -79,7 +76,7 @@ function installGNS3-IOU()
   echo "####### Installing GNS3 IOU" | tee -a $LOG_FILE
   dpkg --add-architecture i386 >> $LOG_FILE
   apt-get update -qq >> $LOG_FILE
-  apt-get install gns3-iou:i386 >> $LOG_FILE
+  apt-get install gns3-iou >> $LOG_FILE
   checkSuccess gns3-iou
 }
 
@@ -164,6 +161,12 @@ function configUFW()
 function configureGNS3()
 {
   echo "###### Configuring GNS3" | tee -a $LOG_FILE
+  printf "Enter GNS3 username: "
+  read user
+  printf "Enter GNS3 password: "
+  read password
+  GNS_USER=$user
+  GNS_PASS=$password
   mkdir -p $GNS_DIR $CONFIG_DIR $IMAGE_DIR $APPLIANCE_DIR $PROJECT_DIR || echo "Error making folders"
   sed -i "s/___USER___/$GNS_USER/" GNS3.conf
   sed -i "s/___PASS___/$GNS_PASS/" GNS3.conf	
@@ -181,7 +184,7 @@ checkRoot
 updatePackages
 installGNS3
 installGNS3-GUI
-installGNS3-IOU
+#installGNS3-IOU
 installDocker
 installDynamips
 installDynagen
