@@ -24,3 +24,8 @@ vi install_packages.sh
 chmod 744 install_packages.sh
 sudo ./install_packages.sh
 ```
+## Troubleshooting
+There is a install.log file. To view the file when running the script
+```
+tail -f install.log
+```
