@@ -15,5 +15,5 @@ sudo ./removepackages.sh
 ```
 To see the output from the removal of the packages
 
-'cat packagelist_removal.log'
+`cat packagelist_removal.log`
 
