@@ -17,15 +17,17 @@ CONFIG_DIR="$HOME/.config"
 LOG_FILE="install.log"
 VPCS_URL="http://sourceforge.net/projects/vpcs/files/0.8/vpcs_0.8b_Linux64/download"
 
-printf "Enter username ::: "
+printf "Enter username: "
 read user
 
-printf "\nEnter password ::: "
+printf "\nEnter password: "
 read password
+
 GNS_USER=$user
 GNS_PASS=$password
 GNS_PORT="3080"
-GNS_VERS="2.1.8"
+#GNS_VERS="2.1.8"
+GNS_VERS="2.2.5"
 SSH_PORT="22"
 
 
@@ -48,6 +50,7 @@ function checkSuccess()
 
 function updatePackages()
 {
+  clear
   echo "###### Updating Packages" | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
   apt-get upgrade -qq >> $LOG_FILE
@@ -66,8 +69,8 @@ function installGNS3()
 function installGNS3-GUI()
 {
   echo "####### Installing GNS3 GUI" | tee -a $LOG_FILE
-  pip3 install -qq gns3-gui==$GNS_VERS >> $LOG_FILE
-  checkSuccess gns3GUI
+  pip3 install -q gns3-gui==$GNS_VERS >> $LOG_FILE
+  checkSuccess gns3
 }
 
 
