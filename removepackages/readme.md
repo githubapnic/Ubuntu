@@ -4,7 +4,7 @@ This repo was created as a way to standardise the removal of unwanted packages t
 1. remove_package.sh - this is the script to uninstall the packages
 2. packagelist - This is a list of packages to remove
 
-To use the script do the following:
+To use the script open a new terminal window (Use Ctrl+alt+T to open terminal) and type the following commands:
 
 ```bash
 sudo apt-get install -y git
