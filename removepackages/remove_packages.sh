@@ -2,8 +2,7 @@
 # Date Created: 2nd March 2020
 # Purpose:
 # This script automates the removal of extra packages installed on Ubuntu 18.04 LTS.
-# Ensure the packagelist, credentials and ports specified in the variables below are 
-# what you want.
+# Ensure the packagelist specified in the file are what you want to remove.
 
 # Credit: Script based on GNS3 installation script
 # https://github.com/rhelshane/Install-GNS3-Server
@@ -39,7 +38,7 @@ function removePackages()
 {
   echo "###### Deleting Packages" | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
-  apt-get upgrade -qq >> $LOG_FILE
+  #apt-get upgrade -qq >> $LOG_FILE
   apt-get remove --purge -qq $(cat packagelist) >> $LOG_FILE
   dpkg -l $(cat packagelist) &> /dev/null && echo "Not removed!" 
   apt-get clean -qq >> $LOG_FILE
