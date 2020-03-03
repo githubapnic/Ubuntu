@@ -49,14 +49,17 @@ function removePackages()
 
 function disableAutoUpdates()
 {
+  echo "###### Updating Packages" | tee -a $LOG_FILE
+  apt-get update -qq >> $LOG_FILE
+  apt-get upgrade -qq >> $LOG_FILE
   echo "###### Disable Auto Updates" | tee -a $LOG_FILE
-  cat /etc/apt/apt.conf.d/20auto-upgrades
   sed -i "s/Upgrade \"1/Upgrade \"0/" /etc/apt/apt.conf.d/20auto-upgrades
-  cat /etc/apt/apt.conf.d/20auto-upgrades
+  echo "cat /etc/apt/apt.conf.d/20auto-upgrades" >> $LOG_FILE
+  cat /etc/apt/apt.conf.d/20auto-upgrades >> tee -a $LOG_FILE
 }
 
 # Run the functions 
 checkRoot
-disableAutoUpdates
 removePackages
+disableAutoUpdates
 
