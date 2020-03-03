@@ -36,7 +36,7 @@ function checkSuccess()
 # Add Gnome Terminal to Launcher
 function addTerminaltoLauncher()
 {
-  echo "###### Add shortuct to Launcher" | tee -a $LOG_FILE
+  echo "###### Add Terminal shortuct to Launcher" | tee -a $LOG_FILE
   if [ !$(gsettings get org.gnome.shell favorite-apps | grep -c "Terminal") -eq 0 ] then
     gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'org.gnome.Terminal.desktop']"
   fi
