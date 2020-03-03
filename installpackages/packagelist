@@ -12,3 +12,4 @@ libpcap-dev
 qemu-kvm
 bridge-utils
 virtinst
+net-tools

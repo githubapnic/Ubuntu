@@ -49,6 +49,8 @@ function updatePackages()
   echo "###### Installing New Packages" 
   apt-get install -qq $(cat packagelist) >> $LOG_FILE
   dpkg -l $(cat packagelist) &> /dev/null && echo "Success!" 
+  echo "####### Installing SSH server" | tee -a $LOG_FILE
+  checkSuccess ssh
 }
 
 # Update packages via apt and install gns3-server via pip3
