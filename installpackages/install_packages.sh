@@ -46,7 +46,17 @@ function updatePackages()
   echo "###### Updating Packages" | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
   apt-get upgrade -qq >> $LOG_FILE
-  echo "###### Installing New Packages" 
+}
+
+function installSSH()
+{
+  echo "####### Installing SSH server" | tee -a $LOG_FILE
+  apt-get install -qq openssh-server >> $LOG_FILE
+  checkSuccess ssh
+}
+function installPackages()
+{
+  echo "###### Installing New Packages" | tee -a $LOG_FILE
   apt-get install -qq $(cat packagelist) >> $LOG_FILE
   dpkg -l $(cat packagelist) &> /dev/null && echo "Success!" 
   echo "####### Installing SSH server" | tee -a $LOG_FILE
@@ -186,6 +196,8 @@ function configureGNS3()
 # Run the functions 
 checkRoot
 updatePackages
+installPackages
+installSSH
 installGNS3
 installGNS3-GUI
 #installGNS3-IOU
@@ -196,3 +208,4 @@ installUbridge
 installVPCS
 #configUFW
 #configureGNS3
+updatePackages
