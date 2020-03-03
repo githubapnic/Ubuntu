@@ -63,9 +63,10 @@ function installGNS3-GUI()
 {
   echo "####### Installing GNS3 GUI" | tee -a $LOG_FILE
   pip3 install -q gns3-gui==$GNS_VERS >> $LOG_FILE
-  sudo cp /usr/local/share/applications/gns3.desktop ~/Desktop/.
-  sudo chmod +x ~/Desktop/gns3.desktop
-  sudo chown ${USER} ~/Desktop/gns3.desktop
+  gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'org.gnome.Terminal.desktop']"
+  # sudo cp /usr/local/share/applications/gns3.desktop ~/Desktop/.
+  # sudo chmod +x ~/Desktop/gns3.desktop
+  # sudo chown ${USER} ~/Desktop/gns3.desktop
   checkSuccess gns3
 }
 
