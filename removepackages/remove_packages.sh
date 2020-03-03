@@ -2,7 +2,7 @@
 # Date Created: 2nd March 2020
 # Purpose:
 # This script automates the removal of extra packages installed on Ubuntu 18.04 LTS.
-# Ensure the packagelist specified in the file are what you want to remove.
+# Ensure the packagelist specified in the file is what you want to remove.
 
 # Credit: Script based on GNS3 installation script
 # https://github.com/rhelshane/Install-GNS3-Server
@@ -33,6 +33,15 @@ function checkSuccess()
   which $1 >> /dev/null && echo "Success!"
 } 
 
+# Add Gnome Terminal to Launcher
+function addTerminaltoLauncher()
+{
+  echo "###### Add shortuct to Launcher" | tee -a $LOG_FILE
+  if [ !$(gsettings get org.gnome.shell favorite-apps | grep -c "Terminal") -eq 0 ] then
+    gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'org.gnome.Terminal.desktop']"
+  fi
+  # which gnome-terminal >> /dev/null && echo "Success!"
+} 
 
 function removePackages()
 {
@@ -55,11 +64,12 @@ function disableAutoUpdates()
   echo "###### Disable Auto Updates" | tee -a $LOG_FILE
   sed -i "s/Upgrade \"1/Upgrade \"0/" /etc/apt/apt.conf.d/20auto-upgrades
   echo "cat /etc/apt/apt.conf.d/20auto-upgrades" >> $LOG_FILE
-  cat /etc/apt/apt.conf.d/20auto-upgrades >> tee -a $LOG_FILE
+  cat /etc/apt/apt.conf.d/20auto-upgrades | tee -a $LOG_FILE
 }
 
 # Run the functions 
 checkRoot
+addTerminaltoLauncher
 removePackages
 disableAutoUpdates
 
