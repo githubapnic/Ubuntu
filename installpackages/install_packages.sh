@@ -43,7 +43,6 @@ function checkSuccess()
 
 function updatePackages()
 {
-  clear
   echo "###### Updating Packages" | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
   apt-get upgrade -qq >> $LOG_FILE
@@ -165,6 +164,8 @@ function configureGNS3()
   read user
   printf "Enter GNS3 password: "
   read password
+  clear
+  echo "###### Configuring GNS3 config file" 
   GNS_USER=$user
   GNS_PASS=$password
   mkdir -p $GNS_DIR $CONFIG_DIR $IMAGE_DIR $APPLIANCE_DIR $PROJECT_DIR || echo "Error making folders"
