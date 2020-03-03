@@ -40,7 +40,7 @@ function checkSuccess()
   which $1 >> /dev/null && echo "Success!"
 } 
 
-
+# Update packages via apt
 function updatePackages()
 {
   echo "###### Updating Packages" | tee -a $LOG_FILE
@@ -48,12 +48,7 @@ function updatePackages()
   apt-get upgrade -qq >> $LOG_FILE
 }
 
-function installSSH()
-{
-  echo "####### Installing SSH server" | tee -a $LOG_FILE
-  apt-get install -qq openssh-server >> $LOG_FILE
-  checkSuccess ssh
-}
+# Install packages via apt
 function installPackages()
 {
   echo "###### Installing New Packages" | tee -a $LOG_FILE
@@ -63,7 +58,14 @@ function installPackages()
   checkSuccess ssh
 }
 
-# Update packages via apt and install gns3-server via pip3
+function installSSH()
+{
+  echo "####### Installing SSH server" | tee -a $LOG_FILE
+  apt-get install -qq openssh-server >> $LOG_FILE
+  checkSuccess ssh
+}
+
+# Install gns3-server and GUI via pip3
 function installGNS3()
 {
   echo "####### Installing GNS3" | tee -a $LOG_FILE
@@ -78,7 +80,7 @@ function installGNS3-GUI()
   gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'gns3.desktop']"
   # sudo cp /usr/local/share/applications/gns3.desktop ~/Desktop/.
   # sudo chmod +x ~/Desktop/gns3.desktop
-  # sudo chown ${USER} ~/Desktop/gns3.desktop
+  # sudo chown ${USER}:${USER} ~/Desktop/gns3.desktop
   checkSuccess gns3
 }
 
