@@ -36,11 +36,11 @@ function checkSuccess()
 # Add Gnome Terminal to Launcher
 function addTerminaltoLauncher()
 {
-  echo "###### Add Terminal shortuct to Launcher" | tee -a $LOG_FILE
-  if [ $(gsettings get org.gnome.shell favorite-apps | grep -c "Terminal") -eq 0 ]; then
+  echo "###### Add shortcuts to Launcher" | tee -a $LOG_FILE
+  #if [ $(gsettings get org.gnome.shell favorite-apps | grep -c "Terminal") -lt 1 ]; then
     gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'org.gnome.Terminal.desktop']"
-  fi
-  # which gnome-terminal >> /dev/null && echo "Success!"
+	#echo "###### Adding Terminal shortcut to Launcher" | tee -a $LOG_FILE
+  #fi
 } 
 
 function removePackages()
