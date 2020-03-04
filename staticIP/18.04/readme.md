@@ -18,10 +18,10 @@ To use the script open a new terminal window (Use Ctrl+alt+T to open terminal) a
 
 ```bash
 cd Ubuntu/staticIP/18.04/
-chmod 744 SetStaticIP.sh
-sudo ./SetStaticIP.sh
+chmod 744 CreateStaticIP.sh
+sudo ./CreateStaticIP.sh
 ```
 ## Troubleshooting
-There is a packagelist_removal.log file. To view the file when running the script, open another terminal window and type:
+There is a set_ip.log file. To view the file when running the script, open another terminal window and type:
 ```
 tail -f set_ip.log
