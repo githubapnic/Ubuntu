@@ -10,7 +10,6 @@ This script was created as a way to set a static IP and other networking details
 * Confirm new settings
 * Back up interfaces file
 * Set new settings
-* Test new settings
 * Apply new settings
 
 ## Installation
