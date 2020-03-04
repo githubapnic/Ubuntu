@@ -194,6 +194,20 @@ function configureGNS3()
   cp GNS3.conf $CONFIG_DIR || echo "Error copying GNS3.conf"
 }
 
+#Install Wireshark
+function installwireshark()
+{
+  echo "####### Installing wireshark" | tee -a $LOG_FILE
+  add-apt-repository ppa:wireshark-dev/stable | tee -a $LOG_FILE
+  apt-get update -qq >> $LOG_FILE
+  apt-get install wireshark | tee -a $LOG_FILE
+  usermod -a -G wireshark $USER >> $LOG_FILE
+  chgrp wireshark /usr/bin/dumpcap >> $LOG_FILE
+  chmod 750 /usr/bin/dumpcap >> $LOG_FILE
+  setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap >> $LOG_FILE
+  gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), 'wireshark.desktop']"
+  checkSuccess wireshark
+}
 
 # Run the functions 
 checkRoot
@@ -210,4 +224,5 @@ installUbridge
 installVPCS
 #configUFW
 #configureGNS3
+installwireshark
 updatePackages
