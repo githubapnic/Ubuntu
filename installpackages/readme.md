@@ -3,6 +3,8 @@
 This script is designed to work on Ubuntu 18.04 LTS. It should be run under root (not suitable for a production environment).
 ## Actions Performed
 * Update system packages
+* Install new packages
+* Install SSH server
 * Install GNS3-Server
 * Install GNS3-GUI
 * Install Docker
@@ -10,6 +12,7 @@ This script is designed to work on Ubuntu 18.04 LTS. It should be run under root
 * Install Dynagen
 * Install uBridge
 * Install VPCS
+* Install Wireshark
 * Configure UFW [optional]
 * Configure GNS3 [optional]
 ## Installation
