@@ -32,6 +32,6 @@ To check if packages are installed
 `dpkg -l $(cat packagelist)`
 
 ## Troubleshooting
-There is an packagelist_removal.log file. To view the file when running the script, open another terminal window and type:
+There is a packagelist_removal.log file. To view the file when running the script, open another terminal window and type:
 ```
 tail -f packagelist_removal.log
