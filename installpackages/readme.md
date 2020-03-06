@@ -15,6 +15,7 @@ This script is designed to work on Ubuntu 18.04 LTS. It should be run under root
 * Install Wireshark
 * Configure UFW [optional]
 * Configure GNS3 [optional]
+* Wireshark
 ## Installation
 Change to root user (if necessary) and clone Git repository:
 ```
