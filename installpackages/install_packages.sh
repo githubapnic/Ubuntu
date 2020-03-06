@@ -200,7 +200,8 @@ function installwireshark()
   echo "####### Installing wireshark" | tee -a $LOG_FILE
   add-apt-repository ppa:wireshark-dev/stable | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
-  apt-get install wireshark | tee -a $LOG_FILE
+  apt-get install -y wireshark | tee -a $LOG_FILE
+  addgroup -system wireshark >> $LOG_FILE
   usermod -a -G wireshark $USER >> $LOG_FILE
   chgrp wireshark /usr/bin/dumpcap >> $LOG_FILE
   chmod 750 /usr/bin/dumpcap >> $LOG_FILE
