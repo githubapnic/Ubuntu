@@ -14,11 +14,11 @@ UBUNTU_VERSION=""
 ## Set language to use
 LANGUAGE="en_US.UTF-8"
 ## Initialise user details
-FULLNAME="apnic"
-USERNAME="apnic"
+FULLNAME=""
+USERNAME=""
 PASSWORD1=""
 PASSWORD2=""
-HOSTNAME="apnic-vm"
+HOSTNAME=""
 
 # Ensure script is run as root user (not a super secure script)
 function checkRoot()
