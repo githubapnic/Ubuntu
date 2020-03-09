@@ -36,9 +36,8 @@ function checkRoot()
 # Ensure script is run on Ubuntu 18.04 (not a super secure script)
 function checkUbuntu()
 {
-  if [[ $(lsb_release -rs) == "18.04" ]];then
-  else
-    echo "This script is for Ubuntu 18.04. This is version $(lsb_release -rs)"
+  if [[ $(lsb_release -rs) == "18.04" ]]; then
+    echo "This script is for Ubuntu version 18.04. This is version $(lsb_release -rs)"
     exit 1
   fi
 }
@@ -206,16 +205,18 @@ function configureGNS3()
 function installwireshark()
 {
   echo "####### Installing wireshark" | tee -a $LOG_FILE
-  add-apt-repository -y ppa:wireshark-dev/stable | tee -a $LOG_FILE
+  add-apt-repository -yq ppa:wireshark-dev/stable | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
-  # FIx to bypass the interactive prompt
-  #
+  # Fix to bypass the interactive prompt
+  # https://unix.stackexchange.com/questions/367866/how-to-choose-a-response-for-interactive-prompt-during-installation-from-a-shell
   echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
-  sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install wireshark | tee -a $LOG_FILE
+  sudo DEBIAN_FRONTEND=noninteractive apt-get -y install wireshark | tee -a $LOG_FILE
   #apt-get install -y wireshark | tee -a $LOG_FILE
   addgroup -system wireshark >> $LOG_FILE
   echo "adding $USER to wireshark group"  | tee -a $LOG_FILE
+  echo "adding ${SUDO_USER} to wireshark group"  | tee -a $LOG_FILE
   usermod -a -G wireshark $USER >> $LOG_FILE
+  usermod -a -G wireshark $SUDO_USER >> $LOG_FILE
   chgrp wireshark /usr/bin/dumpcap >> $LOG_FILE
   chmod 750 /usr/bin/dumpcap >> $LOG_FILE
   setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap >> $LOG_FILE
