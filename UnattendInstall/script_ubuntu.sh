@@ -32,6 +32,7 @@ function checkRoot()
 # Get which version of Ubuntu to create ISO for
 function whichUbuntu()
 {
+  echo "###### Get Ubuntu Version" 
   echo "Please choose ubuntu version-- "
   echo " press 1 for ubuntu 16.04 Desktop"
   echo " press 2 for ubuntu 16.04 Server"
@@ -40,13 +41,13 @@ function whichUbuntu()
   read -p "Enter your choice: " choice
   case $choice in
     1)
-       $UBUNTU_VERSION="16.04 Desktop";;
+       UBUNTU_VERSION="16.04 Desktop";;
     2)
-       $UBUNTU_VERSION="16.04 Server";;  
+       UBUNTU_VERSION="16.04 Server";;  
     3)
-       $UBUNTU_VERSION="18.04 Desktop";;
+       UBUNTU_VERSION="18.04 Desktop";;
     4)
-       $UBUNTU_VERSION="18.04 Server";;
+       UBUNTU_VERSION="18.04 Server";;
     * )
        echo "not a valid option "
        exit 1
@@ -58,14 +59,13 @@ function whichUbuntu()
 function extractISO()
 {
   echo "###############################################################"
-  echo "###############################################################"
   echo "#############   Preparing Ubuntu $UBUNTU_VERSION ##############"
   echo "###############################################################"
-  echo "###############################################################"
-  read -p  "Where is the downloaded iso location" loc	
-  if [ -f "$loc" && $(echo "$loc" | grep ".iso" ) ]
+  read -p  "Where is the downloaded iso location: " loc	
+  if [ -f "$loc" ] && [ $(echo "$loc" | grep ".iso" ) ]
   then
-    echo "Loading ISO"
+    echo "###### Extracting ISO " 
+	# ${UBUNTU_VERSION:0:2} return first 2 characters of the variable eg 16
 	cp $(echo $loc) ./ubuntu${UBUNTU_VERSION:0:2}.iso
 	mkdir iso
 	sudo mount -o loop ubuntu${UBUNTU_VERSION:0:2}.iso ./iso
@@ -97,9 +97,7 @@ function extractISO()
 function whichLanguage()
 {
   echo "###############################################################"
-  echo "###############################################################"
   echo "########## Choose a language for installation purpose #########"
-  echo "###############################################################"
   echo "###############################################################"
   echo "press 1 for arabic"
   echo "press 2 for belarusia"
@@ -164,10 +162,9 @@ function whichLanguage()
 }
 
 # Get details for installation
-function getUserDetails ()
+function getDetails ()
 {
-  echo "#########################################################"
-  echo "#########################################################"
+  echo "###### Get Details" 
   read -p " Enter the user-fullname: " FULLNAME
   read -p "\n Enter the username: " USERNAME
   read -s -p "\n Enter the password: " PASSWORD1
@@ -178,7 +175,7 @@ function getUserDetails ()
 # Update the preseed file with details
 function updateSeedFile()
 {
-  echo "#############   Updating preSeed file ##############"
+  echo "###### Updating preSeed file "
   if [ echo $UBUNTU_VERSION | grep Desktop ] 
   then 
     cp ./files/${UBUNTU_VERSION:0:2}/u_preseed ./extract/preseed/ubuntu.seed
@@ -194,10 +191,23 @@ function updateSeedFile()
   sed -i "s/___PASSWORD2___/$PASSWORD2/" ./extract/preseed/$filename
 }
 
+# Create the ISO
+function createISO()
+{
+  echo "###### Creating ISO " 
+  sudo mkisofs -r -V "$UBUNTU_VERSION.iso" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o "${UBUNTU_VERSION}".iso ./extract
+  sudo chmod 777 output.iso
+  rm -R extract
+  echo "#########################################################"
+  echo "#########################################################"
+  echo "###### ISO created: $CURRENT_DIR/$UBUNTU_VERSION.iso" 
+}
+
 # Run the functions 
 checkRoot
 whichUbuntu
 extractISO
 #whichLanguage
-getUserDetails
+getDetails
 updateSeedFile
+createISO
