@@ -2,8 +2,8 @@
 ## Requirements
 This script is designed to work on Ubuntu 16.04 LTS. It should be run under root (not suitable for a production environment).
 ## Actions Performed
-* Gather details
 * Extract ISO image
+* Gather details
 * Update preseed.cfg file
 * Create ISO image
 
