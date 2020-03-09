@@ -22,3 +22,6 @@ sudo ./script_ubuntu.sh
 There ISO image needs to be stored locally. Please download the Ubuntu ISO from
 * http://releases.ubuntu.com/16.04/
 * http://releases.ubuntu.com
+
+### Credits:
+Based on the script created by Aditya Nehra & Anoop Chaudhary https://github.com/asniii/Automating-ubuntu-preseed 
