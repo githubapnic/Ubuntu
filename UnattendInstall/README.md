@@ -18,6 +18,10 @@ cd Ubuntu/UnattendInstall
 chmod 764 script_ubuntu.sh
 sudo ./script_ubuntu.sh
 ```
+After starting the script you will be asked for the full path to the ISO file eg
+```
+/home/user01/Downloads/ubuntu-16.04.5-desktop-amd64.iso
+```
 ## Pre-requisites
 There ISO image needs to be stored locally. Please download the Ubuntu ISO from
 * http://releases.ubuntu.com/16.04/
