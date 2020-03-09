@@ -33,6 +33,16 @@ function checkRoot()
   fi
 }
 
+# Ensure script is run on Ubuntu 18.04 (not a super secure script)
+function checkUbuntu()
+{
+  if [[ $(lsb_release -rs) == "18.04" ]];then
+  else
+    echo "This script is for Ubuntu 18.04. This is version $(lsb_release -rs)"
+    exit 1
+  fi
+}
+
 
 # Check whether package is installed and in path
 function checkSuccess()
@@ -54,8 +64,6 @@ function installPackages()
   echo "###### Installing New Packages" | tee -a $LOG_FILE
   apt-get install -qq $(cat packagelist) >> $LOG_FILE
   dpkg -l $(cat packagelist) &> /dev/null && echo "Success!" 
-  echo "####### Installing SSH server" | tee -a $LOG_FILE
-  checkSuccess ssh
 }
 
 function installSSH()
@@ -198,10 +206,15 @@ function configureGNS3()
 function installwireshark()
 {
   echo "####### Installing wireshark" | tee -a $LOG_FILE
-  add-apt-repository ppa:wireshark-dev/stable | tee -a $LOG_FILE
+  add-apt-repository -y ppa:wireshark-dev/stable | tee -a $LOG_FILE
   apt-get update -qq >> $LOG_FILE
-  apt-get install -y wireshark | tee -a $LOG_FILE
+  # FIx to bypass the interactive prompt
+  #
+  echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
+  sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install wireshark | tee -a $LOG_FILE
+  #apt-get install -y wireshark | tee -a $LOG_FILE
   addgroup -system wireshark >> $LOG_FILE
+  echo "adding $USER to wireshark group"  | tee -a $LOG_FILE
   usermod -a -G wireshark $USER >> $LOG_FILE
   chgrp wireshark /usr/bin/dumpcap >> $LOG_FILE
   chmod 750 /usr/bin/dumpcap >> $LOG_FILE
@@ -212,6 +225,7 @@ function installwireshark()
 
 # Run the functions 
 checkRoot
+checkUbuntu
 updatePackages
 installPackages
 installSSH
