@@ -7,7 +7,7 @@ Download the repo and change the permissions on all the shell scripts to allow i
 find Ubuntu/ -type f -iname "*.sh" -exec chmod +x {} \;
 ```
 ## Troubleshooting
-If an error about "/bin/bash^M: bad interpeter" replace suspicious characters with:
+If an error about "/bin/bash^M: bad interpeter" replace suspicious characters using the following command:
 ```bash
 sed -i -e 's/\r$//' <filename>
 ```
