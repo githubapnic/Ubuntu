@@ -32,7 +32,7 @@ function checkRoot()
 # Get which version of Ubuntu to create ISO for
 function whichUbuntu()
 {
-  echo "###### Get Ubuntu Version" 
+  echo "###### Get Ubuntu Version" | tee -a $LOG_FILE
   echo "Please choose ubuntu version-- "
   echo " press 1 for ubuntu 16.04 Desktop"
   echo " press 2 for ubuntu 16.04 Server"
@@ -59,7 +59,7 @@ function whichUbuntu()
 function extractISO()
 {
   echo "###############################################################"
-  echo "#############   Preparing Ubuntu $UBUNTU_VERSION ##############"
+  echo "#############   Preparing Ubuntu $UBUNTU_VERSION ##############" | tee -a $LOG_FILE
   echo "###############################################################"
   read -p  "Where is the downloaded iso location: " loc	
   if [ -f "$loc" ] && [ $(echo "$loc" | grep ".iso" ) ]
@@ -69,15 +69,15 @@ function extractISO()
 	cp $(echo $loc) ./ubuntu${UBUNTU_VERSION:0:2}.iso
 	mkdir iso
 	sudo mount -o loop ubuntu${UBUNTU_VERSION:0:2}.iso ./iso
-	rsync -avr ./iso/ ./extract/
-	sudo chmod 777 -R extract
+	rsync -avr ./iso/ ./extract/ >> $LOG_FILE
+	sudo chmod 777 -R extract >> $LOG_FILE
 	sudo umount ./iso
 	sudo rm -R ./iso
 	sudo rm ubuntu${UBUNTU_VERSION:0:2}.iso
 	rm ./extract/isolinux/isolinux.cfg				
 	rm ./extract/isolinux/txt.cfg
 	rm ./extract/isolinux/langlist
-	if [ echo $UBUNTU_VERSION | grep Desktop ] 
+	if [[ $UBUNTU_VERSION == *"Desktop" ]] 
 	then 
 	  rm ./extract/preseed/ubuntu.seed
 	  cp ./files/${UBUNTU_VERSION:0:2}/isolinux.cfg ./extract/isolinux/isolinux.cfg
@@ -97,7 +97,7 @@ function extractISO()
 function whichLanguage()
 {
   echo "###############################################################"
-  echo "########## Choose a language for installation purpose #########"
+  echo "########## Choose a language for installation purpose #########" | tee -a $LOG_FILE
   echo "###############################################################"
   echo "press 1 for arabic"
   echo "press 2 for belarusia"
@@ -164,19 +164,21 @@ function whichLanguage()
 # Get details for installation
 function getDetails ()
 {
-  echo "###### Get Details" 
+  echo "###### Get Details" | tee -a $LOG_FILE
   read -p " Enter the user-fullname: " FULLNAME
-  read -p "\n Enter the username: " USERNAME
-  read -s -p "\n Enter the password: " PASSWORD1
-  read -s -p "\n Enter the password again: " PASSWORD2
-  read -p "\n Enter the hostname: " HOSTNAME
+  read -p " Enter the username: " USERNAME
+  read -s -p " Enter the password: " PASSWORD1
+  echo " "
+  read -s -p " Enter the password again: " PASSWORD2
+  echo " "
+  read -p " Enter the hostname: " HOSTNAME
 }
 
 # Update the preseed file with details
 function updateSeedFile()
 {
-  echo "###### Updating preSeed file "
-  if [ echo $UBUNTU_VERSION | grep Desktop ] 
+  echo "###### Updating preSeed file " | tee -a $LOG_FILE
+  if [[ $UBUNTU_VERSION == *"Desktop" ]] 
   then 
     cp ./files/${UBUNTU_VERSION:0:2}/u_preseed ./extract/preseed/ubuntu.seed
 	filename="ubuntu.seed"
@@ -194,13 +196,14 @@ function updateSeedFile()
 # Create the ISO
 function createISO()
 {
-  echo "###### Creating ISO " 
-  sudo mkisofs -r -V "$UBUNTU_VERSION.iso" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o "${UBUNTU_VERSION}".iso ./extract
-  sudo chmod 777 output.iso
+  echo "###### Creating ISO " | tee -a $LOG_FILE
+  sudo mkisofs -r -V "$UBUNTU_VERSION.iso" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o "${UBUNTU_VERSION}".iso ./extract >> $LOG_FILE
+  sudo chmod 777 "${UBUNTU_VERSION}".iso
+  sudo chmod 664 $LOG_FILE
   rm -R extract
   echo "#########################################################"
   echo "#########################################################"
-  echo "###### ISO created: $CURRENT_DIR/$UBUNTU_VERSION.iso" 
+  echo "###### ISO created: $CURRENT_DIR/$UBUNTU_VERSION.iso" | tee -a $LOG_FILE
 }
 
 # Run the functions 
