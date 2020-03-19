@@ -1,0 +1,101 @@
+# APNIC IX Workshop lab
+
+model = 7200
+
+[localhost]
+   #[192.168.0.10]
+   
+   
+   [[7200]]
+      image = ../images/c7200-advipservicesk9-mz.152-4.S3.image
+      ram = 176
+      npe = npe-400
+      ghostios = True
+      
+      #idlepc= 0x6082a1f0
+      #idlepc=  0x608a1538
+      #idlepc=  0x608a1358
+      #idlepc=  0x608c5bc8
+      #idlepc=0x60608f64
+      #idlepc=0x6316a604
+      idlepc = 0x63178d9c
+   
+   [[ROUTER R1]]
+      console = 2001
+      aux = 3001
+      slot2 = PA-4E
+      slot1 = PA-4E
+      cnfg = configs/R1.cfg
+      model = 7200
+   
+   [[ROUTER R13]]
+      console = 2013
+      aux = 3013
+      fa0/1 = R1 e1/0
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap13
+      cnfg = configs/R13.cfg
+      model = 7200
+   
+   [[ROUTER R14]]
+      console = 2014
+      aux = 3014
+      fa0/1 = R1 e1/1
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap14
+      cnfg = configs/R14.cfg
+      model = 7200
+   
+   [[ROUTER R15]]
+      console = 2015
+      aux = 3015
+      fa0/1 = R1 e1/2
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap15
+      cnfg = configs/R15.cfg
+      model = 7200
+
+   [[ROUTER R16]]
+      console = 2016
+      aux = 3016
+      fa0/1 = R1 e1/3
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap16
+      cnfg = configs/R16.cfg
+      model = 7200
+   
+   [[ROUTER R17]]
+      console = 2017
+      aux = 3017
+      fa0/1 = R1 e2/0
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap17
+      cnfg = configs/R17.cfg
+      model = 7200
+   
+   [[ROUTER R18]]
+      console = 2018
+      aux = 3018
+      fa0/1 = R1 e2/1
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap18
+      cnfg = configs/R18.cfg
+      model = 7200
+   
+   [[ROUTER R19]]
+      console = 2019
+      aux = 3019
+      fa0/1 = R1 e2/2
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap19
+      cnfg = configs/R19.cfg
+      model = 7200
+   
+   [[ROUTER R20]]
+      console = 2020
+      aux = 3020
+      fa0/1 = R1 e2/3
+      slot1 = PA-4E
+      e1/1 = NIO_tap:tap20
+      cnfg = configs/R20.cfg
+      model = 7200

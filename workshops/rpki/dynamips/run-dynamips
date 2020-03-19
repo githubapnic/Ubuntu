@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rm c7200_*
+rm c7200-*.ghost
+cd /tmp
+dynamips -H 7200 &
+# dynamips -H 7201 &
