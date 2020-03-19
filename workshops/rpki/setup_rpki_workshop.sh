@@ -9,8 +9,8 @@
 
 # Declare variables
 CURRENT_DIR=$(pwd)
-WORKSHOP_DYNAMIPS_DIR="$HOME/Virtual_labs/RPKI"
-SCRIPT_DIR=$CURRENT_DIR/scripts/
+WORKSHOP_DYNAMIPS_DIR="$HOME/Virtual_labs/rpki"
+SCRIPT_DIR=$CURRENT_DIR/Documents/scripts/
 IMAGE_DIR="$HOME/Virtual_labs/images"
 CONFIG_DIR="$HOME/.config"
 LOG_FILE="install.log"
@@ -188,6 +188,22 @@ function SetupRPKIContainer()
     #checkSuccess lxc
 }
 
+# Copy scripts to the Documents folder
+function copyScripts()
+{
+  mkdir -p $SCRIPT_DIR >> $LOG_FILE
+  cp scripts/*.* $SCRIPT_DIR/. >> $LOG_FILE
+  chmod u+x $SCRIPT_DIR/*.sh >> $LOG_FILE
+}
+
+# Copy scripts to the Documents folder
+function setupDynamips()
+{
+  mkdir -p $WORKSHOP_DYNAMIPS_DIR >> $LOG_FILE
+  cp -R dynamips/*.* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
+  chmod u+x $WORKSHOP_DYNAMIPS_DIR/*.sh >> $LOG_FILE
+}
+
 
 # Run the functions 
 checkRoot
@@ -200,6 +216,8 @@ enableForwarding
 installLXC
 createLXCtemplate
 SetupRPKIContainer
+copyScripts
+setupDynamips
 echo "####### Installation Finished. Workshop files are located:" | tee -a $LOG_FILE
 echo "####### $WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
 echo "####### $CURRENT_DIR" | tee -a $LOG_FILE
