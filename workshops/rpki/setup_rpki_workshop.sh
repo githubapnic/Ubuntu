@@ -10,7 +10,7 @@
 # Declare variables
 CURRENT_DIR=$(pwd)
 WORKSHOP_DYNAMIPS_DIR="$HOME/Virtual_labs/rpki"
-SCRIPT_DIR=$CURRENT_DIR/Documents/scripts/
+SCRIPT_DIR="$HOME/Documents/scripts/"
 IMAGE_DIR="$HOME/Virtual_labs/images"
 CONFIG_DIR="$HOME/.config"
 LOG_FILE="install.log"
@@ -199,7 +199,7 @@ function copyScripts()
 # Copy scripts to the Documents folder
 function setupDynamips()
 {
-  mkdir -p $WORKSHOP_DYNAMIPS_DIR >> $LOG_FILE
+  mkdir -p $WORKSHOP_DYNAMIPS_DIR $IMAGE_DIR >> $LOG_FILE
   cp -R dynamips/*.* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
   chmod u+x $WORKSHOP_DYNAMIPS_DIR/*.sh >> $LOG_FILE
 }
