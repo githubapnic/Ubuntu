@@ -16,6 +16,8 @@ CONFIG_DIR="$HOME/.config"
 LOG_FILE="install.log"
 NAME="rpki.apnictraining.net"
 NETPLAN_IP="192.168.30.240"
+USERNAME=$1
+PASSWORD=$2
 
 # Ensure script is run as root user (not a super secure script)
 function checkRoot()
@@ -71,26 +73,30 @@ function createLXCtemplate()
     echo "###### template.apnictraining.net already configured" | tee -a $LOG_FILE
   else
     echo "###### Creating template.apnictraining.net" | tee -a $LOG_FILE
-	printf "Enter username for LXC template: "
-    read user
-    printf "Enter password: "
-    read -s -p password
-    # clear
-    $user
-    $password
+	if [[ -z $(USERNAME) ]]; then
+	  printf "Enter username for LXC template: "
+      read user
+      printf "Enter password: "
+      read -s -p password
+	else
+      user=$USERNAME
+      password=$PASSWORD
+	fi
     # add a template for Ubuntu-apnic
     # This sets the default user name to apnic and password to training
-    sudo cp /usr/share/lxc/templates/lxc-ubuntu /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
-    sudo sed -i 's/user=\$4/user=apnic/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
-    sudo sed -i 's/user=\"ubuntu\"/user=apnic/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
-    sudo sed -i 's/password=\"ubuntu\"/password=training/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
+    # sudo cp /usr/share/lxc/templates/lxc-ubuntu /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
+    # sudo sed -i 's/user=\$4/user=apnic/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
+    # sudo sed -i 's/user=\"ubuntu\"/user=apnic/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
+    # sudo sed -i 's/password=\"ubuntu\"/password=training/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # Download and create a container
     #sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic >> $LOG_FILE
-	sudo lxc-create -n template.apnictraining.net -t ubuntu -q -o LXC_install.log -- --user $user --password $password >> $LOG_FILE
+	sudo lxc-create -n template.apnictraining.net -t ubuntu -q -- --user $user --password $password >> $LOG_FILE
     echo "###### Update IP details to 192.168.30.100" | tee -a $LOG_FILE
     # Update the IP address
     sudo cp 10-lxc.yaml /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
     sudo lxc-stop -n template.apnictraining.net >> $LOG_FILE
+	more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
+	more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
     #updateLXCtemplate
   fi
 }
