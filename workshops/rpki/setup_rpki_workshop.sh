@@ -30,6 +30,7 @@ function checkRoot()
 function checkUbuntu()
 {
   if [[ $(lsb_release -rs) == "18.04" ]]; then
+  date >> $LOG_FILE
   echo "###### Checking Ubuntu Version" | tee -a $LOG_FILE
   else
     echo "This script is for Ubuntu version 18.04. This is version $(lsb_release -rs)"
@@ -70,6 +71,13 @@ function createLXCtemplate()
     echo "###### template.apnictraining.net already configured" | tee -a $LOG_FILE
   else
     echo "###### Creating template.apnictraining.net" | tee -a $LOG_FILE
+	printf "Enter username for LXC template: "
+    read user
+    printf "Enter password: "
+    read -s -p password
+    # clear
+    $user
+    $password
     # add a template for Ubuntu-apnic
     # This sets the default user name to apnic and password to training
     sudo cp /usr/share/lxc/templates/lxc-ubuntu /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
@@ -77,7 +85,8 @@ function createLXCtemplate()
     sudo sed -i 's/user=\"ubuntu\"/user=apnic/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     sudo sed -i 's/password=\"ubuntu\"/password=training/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # Download and create a container
-    sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic >> $LOG_FILE
+    #sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic >> $LOG_FILE
+	sudo lxc-create -n template.apnictraining.net -t ubuntu -q -o LXC_install.log -- --user $user --password $password >> $LOG_FILE
     echo "###### Update IP details to 192.168.30.100" | tee -a $LOG_FILE
     # Update the IP address
     sudo cp 10-lxc.yaml /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
@@ -119,6 +128,17 @@ function installSSH()
   fi
 }
 
+# Install Screen if not already installed
+function installScreen()
+{
+  if [[ $(checkSuccess screen) == "Success!" ]]; then
+    echo "###### Screen already installed" | tee -a $LOG_FILE
+  else
+    echo "####### Installing Screen" | tee -a $LOG_FILE
+    apt-get install -y -qq screen >> $LOG_FILE
+    checkSuccess screen
+  fi
+}
 
 # Install the 32-bit version of dynamips (more stable)
 function installDynamips()
@@ -194,14 +214,18 @@ function copyScripts()
   mkdir -p $SCRIPT_DIR >> $LOG_FILE
   cp scripts/*.* $SCRIPT_DIR/. >> $LOG_FILE
   chmod u+x $SCRIPT_DIR/*.sh >> $LOG_FILE
+  chown -R $SUDO_USER:$SUDO_USER $SCRIPT_DIR >> $LOG_FILE
 }
 
-# Copy scripts to the Documents folder
+# Copy the files to the rpki dynamips folder
 function setupDynamips()
 {
   mkdir -p $WORKSHOP_DYNAMIPS_DIR $IMAGE_DIR >> $LOG_FILE
+  chown -R $SUDO_USER:$SUDO_USER $IMAGE_DIR >> $LOG_FILE
   cp -R dynamips/*.* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
   chmod u+x $WORKSHOP_DYNAMIPS_DIR/*.sh >> $LOG_FILE
+  chmod u+x $WORKSHOP_DYNAMIPS_DIR/run* >> $LOG_FILE
+  chown -R $SUDO_USER:$SUDO_USER $WORKSHOP_DYNAMIPS_DIR >> $LOG_FILE
 }
 
 
@@ -210,6 +234,7 @@ checkRoot
 checkUbuntu
 updatePackages
 installSSH
+installScreen
 installDynamips
 installDynagen
 enableForwarding
