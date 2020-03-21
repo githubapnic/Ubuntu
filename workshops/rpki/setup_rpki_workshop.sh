@@ -9,15 +9,16 @@
 
 # Declare variables
 CURRENT_DIR=$(pwd)
-WORKSHOP_DYNAMIPS_DIR="$HOME/Virtual_labs/rpki"
+WORKSHOP_DYNAMIPS_DIR="$HOME/virtual_labs/rpki"
 SCRIPT_DIR="$HOME/Documents/scripts/"
-IMAGE_DIR="$HOME/Virtual_labs/images"
-CONFIG_DIR="$HOME/.config"
+IMAGE_DIR="$HOME/virtual_labs/images"
+LXCWEBPANEL_DIR="$HOME/virtual_labs/lxcwebpanel/"
 LOG_FILE="install.log"
 NAME="rpki.apnictraining.net"
 NETPLAN_IP="192.168.30.240"
 USERNAME=$1
 PASSWORD=$2
+TEMPLATE_PACKAGES="openssh-server,gcc,curl,build-essential"
 
 # Ensure script is run as root user (not a super secure script)
 function checkRoot()
@@ -83,14 +84,16 @@ function createLXCtemplate()
       password=$PASSWORD
 	fi
     # add a template for Ubuntu-apnic
-    # This sets the default user name to apnic and password to training
-    # sudo cp /usr/share/lxc/templates/lxc-ubuntu /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
+    sudo cp -p /usr/share/lxc/templates/lxc-ubuntu /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
+	sudo sed -i 's/apt-transport-https,ssh,vim/nano/' /usr/share/lxc/templates/lxc-ubuntu-apnic  >> $LOG_FILE
+	sudo sed -i 's/packages_template\=\"\${packages_t/\#packages_template\=\"\${packages_t/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # sudo sed -i 's/user=\$4/user=apnic/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # sudo sed -i 's/user=\"ubuntu\"/user=apnic/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # sudo sed -i 's/password=\"ubuntu\"/password=training/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # Download and create a container
     #sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic >> $LOG_FILE
-	sudo lxc-create -n template.apnictraining.net -t ubuntu -q -- --user $user --password $password >> $LOG_FILE
+	#sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password --packages openssh-server,gcc,curl,build-essential >> $LOG_FILE
+	sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -q -- --user $user --password $password --packages $TEMPLATE_PACKAGES --variant minbase >> $LOG_FILE
     echo "###### Update IP details to 192.168.30.100" | tee -a $LOG_FILE
     # Update the IP address
     sudo cp 10-lxc.yaml /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
@@ -197,6 +200,17 @@ function installLXC()
   fi
 }
 
+# Install LXC web portal
+function installLXCwebportal()
+{
+  mkdir -p $LXCWEBPANEL_DIR >> $LOG_FILE
+  chown -R $SUDO_USER:$SUDO_USER $LXCWEBPANEL_DIR >> $LOG_FILE
+  echo "###### Installing LXC Web Panel" | tee -a $LOG_FILE
+  wget -P $LXCWEBPANEL_DIR https://lxc-webpanel.github.io/tools/install.sh -O - | bash | tee -a $LOG_FILE
+  echo "###### Updating LXC Web Panel" | tee -a $LOG_FILE
+  wget -P $LXCWEBPANEL_DIR https://lxc-webpanel.github.io/tools/update.sh -O - | bash | tee -a $LOG_FILE
+}
+
 # Setup RPKI container
 function SetupRPKIContainer()
 {
@@ -245,6 +259,7 @@ installDynamips
 installDynagen
 enableForwarding
 installLXC
+# installLXCwebportal
 createLXCtemplate
 SetupRPKIContainer
 copyScripts
