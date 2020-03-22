@@ -1,4 +1,4 @@
-# Install Packages for workshops
+# Install Packages for GNS3
 ## Requirements
 This script is designed to work on Ubuntu 18.04 LTS. It should be run under root (not suitable for a production environment).
 ## Actions Performed
