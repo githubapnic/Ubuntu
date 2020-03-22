@@ -21,7 +21,7 @@ lxc-copy -n template.apnictraining.net -N $HOSTNAME
 echo "Update IP and Host details to:"
 
 # Update the IP address
-sed -i 's/address 192.168.30.100/address '"$IP"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml
+sed -i 's/192.168.30.100/'"$IP"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml
 more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address
 
 # Update host file
