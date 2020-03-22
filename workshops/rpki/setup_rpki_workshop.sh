@@ -86,11 +86,15 @@ function createLXCtemplate()
 	fi
     # add a template for Ubuntu-apnic
     sudo cp -p /usr/share/lxc/templates/lxc-ubuntu /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
-	sudo sed -i 's/apt-transport-https,ssh,vim/nano/' /usr/share/lxc/templates/lxc-ubuntu-apnic  >> $LOG_FILE
+	if [[ -z $TEMPLATE_PACKAGES ]]; then
+	  sudo sed -i 's/apt-transport-https,ssh,vim/nano/' /usr/share/lxc/templates/lxc-ubuntu-apnic  >> $LOG_FILE
+	else
+	  sudo sed -i 's/apt-transport-https,ssh,vim/$TEMPLATE_PACKAGES,nano/' /usr/share/lxc/templates/lxc-ubuntu-apnic  >> $LOG_FILE
+	fi
 	#sudo sed -i 's/packages_template\=\"\${packages_t/\#packages_template\=\"\${packages_t/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # Download and create a container
 	#sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password --packages $TEMPLATE_PACKAGES --variant minbase >> $LOG_FILE
-	sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password --packages $TEMPLATE_PACKAGES >> $LOG_FILE
+	sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password >> $LOG_FILE
     echo "###### Update IP details to 192.168.30.100" | tee -a $LOG_FILE
     # Update the IP address
 	sudo mkdir -p /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/ >> $LOG_FILE
