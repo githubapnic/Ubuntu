@@ -74,11 +74,9 @@ function createLXCtemplate()
     echo "###### template.apnictraining.net already configured" | tee -a $LOG_FILE
   else
     echo "###### Creating template.apnictraining.net" | tee -a $LOG_FILE
-	if [[ -z $(USERNAME) ]]; then
-	  printf "Enter username for LXC template: "
-      read user
-      printf "Enter password: "
-      read -s -p password
+	if [[ -z $USERNAME ]]; then
+	  read -p 'Enter username for LXC template: ' user
+      read -sp 'Enter password: ' password
 	else
       user=$USERNAME
       password=$PASSWORD
@@ -240,7 +238,7 @@ function setupDynamips()
 {
   mkdir -p $WORKSHOP_DYNAMIPS_DIR $IMAGE_DIR >> $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $IMAGE_DIR >> $LOG_FILE
-  cp -R dynamips/*.* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
+  cp -R dynamips/* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
   chmod u+x $WORKSHOP_DYNAMIPS_DIR/*.sh >> $LOG_FILE
   chmod u+x $WORKSHOP_DYNAMIPS_DIR/run* >> $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $WORKSHOP_DYNAMIPS_DIR >> $LOG_FILE
@@ -267,3 +265,7 @@ echo "####### $WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
 echo "####### $CURRENT_DIR" | tee -a $LOG_FILE
 echo "####### $HOME/Documents/scripts/" | tee -a $LOG_FILE
 echo "####### /var/lib/lxc/$NAME/" | tee -a $LOG_FILE
+echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image:"
+echo "####### $(ls ~/virtual_labs/images | grep 720)"
+echo "####### Current image name in topology file:"
+echo "head $WORKSHOP_DYNAMIPS_DIR/topology.net"
