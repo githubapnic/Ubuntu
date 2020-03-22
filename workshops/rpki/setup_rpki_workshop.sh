@@ -75,8 +75,9 @@ function createLXCtemplate()
   else
     echo "###### Creating template.apnictraining.net" | tee -a $LOG_FILE
 	if [[ -z $USERNAME ]]; then
-	  read -p 'Enter username for LXC template: ' user
+	  read -p 'Enter username for LXC template: ' user >> $LOG_FILE
       read -sp 'Enter password: ' password
+	  echo
 	  echo "###### Please wait will template.apnictraining.net is downloaded and created ..." | tee -a $LOG_FILE
 	  echo "###### Depending on internet speed this may take more than 10 minutes"
 	else
