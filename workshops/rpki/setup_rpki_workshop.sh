@@ -77,6 +77,7 @@ function createLXCtemplate()
 	if [[ -z $USERNAME ]]; then
 	  read -p 'Enter username for LXC template: ' user
       read -sp 'Enter password: ' password
+	  echo "###### Adding user to template.apnictraining.net" | tee -a $LOG_FILE
 	else
       user=$USERNAME
       password=$PASSWORD
