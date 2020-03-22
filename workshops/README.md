@@ -28,7 +28,7 @@ cd ~/Ubuntu/workshops
 * delete a snapshot: `sudo lxc-snapshot -n $name -d snap@`
 
 ## Commands for starting dynamips and topology files
-* Check if dynamips is running: `sudo ps-ef | grep dynamips`
+* Check if dynamips is running: `ps-ef | grep dynamips`
 * Kill all dynamips processes: `sudo killall dynamips`
 * Script to remove files and start dynamips: `sudo ./run-dynamips` or `sudo ./run-dynamips.sh`
 * To start dynagen with the topology file: `sudo dynagen topology.net`
