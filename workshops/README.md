@@ -11,18 +11,18 @@ cd ~/Ubuntu/workshops
 
 # CheatSheet for LXC
 * Containers are created in `/var/lib/lxc/$name`, see the file `config` and the directory `rootfs`
-* List all containers, with running state and IP address: `lxc-ls -f`
-* Start a container without console: `lxc-start -d --name $name`
-* Start a container: `lxc-start --name $name`
-* Stop a container: `lxc-stop -n $name`
-* Destroy a container: `lxc-destroy --name $name`
+* List all containers, with running state and IP address: `sudo lxc-ls -f`
+* Start a container without console: `sudo lxc-start -d --name $name`
+* Start a container: `sudo lxc-start --name $name`
+* Stop a container: `sudo lxc-stop -n $name`
+* Destroy a container: `sudo lxc-destroy --name $name`
 
 ## Snapshots:
 * are stored in `/var/lib/lxcsnaps/`
-* first stop the container: `lxc-stop -n $name`
-* then create the snapshot: `lxc-snapshot -n $name`
+* first stop the container: `sudo lxc-stop -n $name`
+* then create the snapshot: `sudo lxc-snapshot -n $name`
  * create with comment: `echo "mycomment" > /tmp/comment && lxc-snapshot -n $name -c /tmp/comment && rm -f /tmp/comment`
-* list all snapshots: `lxc-snapshot -LC -n $name`
-* restore a snapshot: `lxc-snapshot -n $name -r snap@`
-* create a new container from snapshot: `lxc-snapshot -n $name -r snap@ new$name`
-* delete a snapshot: `lxc-snapshot -n $name -d snap@`
+* list all snapshots: `sudo lxc-snapshot -LC -n $name`
+* restore a snapshot: `sudo lxc-snapshot -n $name -r snap@`
+* create a new container from snapshot: `sudo lxc-snapshot -n $name -r snap@ new$name`
+* delete a snapshot: `sudo lxc-snapshot -n $name -d snap@`
