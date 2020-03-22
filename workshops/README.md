@@ -9,7 +9,7 @@ git clone https://github.com/githubapnic/Ubuntu.git
 cd ~/Ubuntu/workshops
 ```
 
-## Commands for using LXC conatainers
+## Commands for using LXC containers
 * Containers are created in `/var/lib/lxc/$name`, see the file `config` and the directory `rootfs`
 * List all containers, with running state and IP address: `sudo lxc-ls -f`
 * Start a container without console: `sudo lxc-start -d --name $name`
@@ -26,3 +26,10 @@ cd ~/Ubuntu/workshops
 * restore a snapshot: `sudo lxc-snapshot -n $name -r snap@`
 * create a new container from snapshot: `sudo lxc-snapshot -n $name -r snap@ new$name`
 * delete a snapshot: `sudo lxc-snapshot -n $name -d snap@`
+
+## Commands for starting dynamips and topology files
+* Check if dynamips is running: `sudo ps-ef | grep dynamips`
+* Kill all dynamips processes: `sudo killall dynamips`
+* Script to remove files and start dynamips: `sudo ./run-dynamips` or `sudo ./run-dynamips.sh`
+* To start dynagen with the topology file: `sudo dynagen topology.net`
+* To confirm dynamips port is listening: `netstat -ltnp | grep 720`
