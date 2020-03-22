@@ -97,8 +97,8 @@ function createLXCtemplate()
 	if [[ $(lxc-ls -f | grep template | awk '{print $2}') == "RUNNING" ]]; then 
       sudo lxc-stop -n template.apnictraining.net >> $LOG_FILE
     fi
-	sudo more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
-	sudo more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
+	sudo cat /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
+	sudo cat /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
     #updateLXCtemplate
   fi
 }
