@@ -229,6 +229,7 @@ function SetupRPKIContainer()
 # Copy scripts to the Documents folder
 function copyScripts()
 {
+  echo "###### Copy some useful LXC scripts" | tee -a $LOG_FILE
   mkdir -p $SCRIPT_DIR >> $LOG_FILE
   cp scripts/*.* $SCRIPT_DIR/. >> $LOG_FILE
   chmod u+x $SCRIPT_DIR/*.sh >> $LOG_FILE
@@ -238,6 +239,7 @@ function copyScripts()
 # Copy the files to the rpki dynamips folder
 function setupDynamips()
 {
+  echo "###### Copy RPKI topology files" | tee -a $LOG_FILE
   mkdir -p $WORKSHOP_DYNAMIPS_DIR $IMAGE_DIR >> $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $IMAGE_DIR >> $LOG_FILE
   cp -R dynamips/* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
@@ -246,6 +248,12 @@ function setupDynamips()
   chown -R $SUDO_USER:$SUDO_USER $WORKSHOP_DYNAMIPS_DIR >> $LOG_FILE
 }
 
+# Fix for dynagen to run on Ubuntu 18.04
+function setTimeZone()
+{
+  echo "###### Change Timezone to NYC for dynamips to work" | tee -a $LOG_FILE
+  ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+}
 
 # Run the functions 
 checkRoot
@@ -262,6 +270,7 @@ createLXCtemplate
 SetupRPKIContainer
 copyScripts
 setupDynamips
+setTimeZone
 echo "####### Installation Finished. Workshop files are located:" | tee -a $LOG_FILE
 echo "####### $WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
 echo "####### $CURRENT_DIR" | tee -a $LOG_FILE
