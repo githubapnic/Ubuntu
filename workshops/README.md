@@ -33,5 +33,4 @@ cd ~/Ubuntu/workshops
 * Script to remove files and start dynamips: `sudo ./run-dynamips` or `sudo ./run-dynamips.sh`
 * To start dynagen with the topology file: `sudo dynagen topology.net`
 * To confirm dynamips port is listening: `netstat -ltnp | grep 720`
-* A nice tutorial about using dynamips is available from NSRC
-  https://nsrc.org/workshops/2013/nsrc-ubuntunet-trainers/raw-attachment/wiki/Agenda/lab-dynamips.html
+* A nice tutorial about using dynamips is available from [NSRC](https://nsrc.org/workshops/2013/nsrc-ubuntunet-trainers/raw-attachment/wiki/Agenda/lab-dynamips.html "NSRC Dynamips Lab")
