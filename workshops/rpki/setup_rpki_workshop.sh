@@ -88,16 +88,17 @@ function createLXCtemplate()
 	sudo sed -i 's/apt-transport-https,ssh,vim/nano/' /usr/share/lxc/templates/lxc-ubuntu-apnic  >> $LOG_FILE
 	#sudo sed -i 's/packages_template\=\"\${packages_t/\#packages_template\=\"\${packages_t/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # Download and create a container
-    #sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic >> $LOG_FILE
-	#sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password --packages openssh-server,gcc,curl,build-essential >> $LOG_FILE
 	#sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password --packages $TEMPLATE_PACKAGES --variant minbase >> $LOG_FILE
 	sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password --packages $TEMPLATE_PACKAGES >> $LOG_FILE
     echo "###### Update IP details to 192.168.30.100" | tee -a $LOG_FILE
     # Update the IP address
-    sudo cp 10-lxc.yaml /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
-    sudo lxc-stop -n template.apnictraining.net >> $LOG_FILE
-	more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
-	more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
+	sudo mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/ >> $LOG_FILE
+    sudo cp 10-lxc.yaml /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
+	if [[ $(lxc-ls -f | grep template | awk '{print $2}') == "RUNNING" ]]; then 
+      sudo lxc-stop -n template.apnictraining.net >> $LOG_FILE
+    fi
+	sudo more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
+	sudo more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
     #updateLXCtemplate
   fi
 }
