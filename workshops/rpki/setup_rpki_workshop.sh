@@ -278,7 +278,8 @@ echo "####### $WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
 echo "####### $CURRENT_DIR" | tee -a $LOG_FILE
 echo "####### $HOME/Documents/scripts/" | tee -a $LOG_FILE
 echo "####### /var/lib/lxc/$NAME/" | tee -a $LOG_FILE
-echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image:"
-echo "####### $(ls ~/virtual_labs/images | grep 720)"
-echo "####### Current image name in topology file:"
-echo "head $WORKSHOP_DYNAMIPS_DIR/topology.net"
+echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image."
+echo "####### Current image name in $IMAGE_DIR:" | tee -a $LOG_FILE
+echo "####### $(ls ~/virtual_labs/images | grep 720)" | tee -a $LOG_FILE
+echo "####### Current image name in topology file:" | tee -a $LOG_FILE
+echo "$(head $WORKSHOP_DYNAMIPS_DIR/topology.net)" | tee -a $LOG_FILE
