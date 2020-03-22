@@ -3,7 +3,7 @@
 This script is designed to work on Ubuntu 18.04 LTS. It should be run under root (not suitable for a production environment).
 
 ### Cisco IOS image file
-The dynamips for this workshop requires a cisco 7200 IOS image file to located in an images folder.
+The dynamips for this workshop requires a cisco 7200 IOS image file to be located in an images folder.
 
 ```
 cd ~/virtual_labs/images
