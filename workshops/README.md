@@ -16,6 +16,7 @@ cd ~/Ubuntu/workshops
 * Start a container: `sudo lxc-start --name $name`
 * Stop a container: `sudo lxc-stop -n $name`
 * Destroy a container: `sudo lxc-destroy --name $name`
+* A tutorial about using lxc is available on YoutTube called [Getting started with LXC containers](https://www.youtube.com/watch?v=CWmkSj_B-wo)
 
 ### Snapshots:
 * are stored in `/var/lib/lxcsnaps/`
