@@ -249,7 +249,7 @@ function setupDynamips()
   mkdir -p $WORKSHOP_DYNAMIPS_DIR $IMAGE_DIR >> $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $IMAGE_DIR >> $LOG_FILE
   cp -R dynamips/* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
-  chmod u+x $WORKSHOP_DYNAMIPS_DIR/*.sh >> $LOG_FILE
+  # chmod u+x $WORKSHOP_DYNAMIPS_DIR/*.sh >> $LOG_FILE
   chmod u+x $WORKSHOP_DYNAMIPS_DIR/run* >> $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $WORKSHOP_DYNAMIPS_DIR >> $LOG_FILE
 }
@@ -259,6 +259,23 @@ function setTimeZone()
 {
   echo "###### Change Timezone to NYC for dynamips to work" | tee -a $LOG_FILE
   ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+}
+
+# Display message about wheer files are located
+function displayMessage()
+{
+  echo "####### Installation Finished. Workshop files are located:" | tee -a $LOG_FILE
+  echo "####### $WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
+  echo "####### $CURRENT_DIR" | tee -a $LOG_FILE
+  echo "####### $HOME/Documents/scripts/" | tee -a $LOG_FILE
+  echo "####### /var/lib/lxc/$NAME/" | tee -a $LOG_FILE
+  echo
+  echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image."
+  echo "####### Current image name in $IMAGE_DIR:" | tee -a $LOG_FILE
+  echo "####### $(ls ~/virtual_labs/images | grep 720)" | tee -a $LOG_FILE
+  echo
+  echo "####### Current image name in topology file:" | tee -a $LOG_FILE
+  echo "$(head $WORKSHOP_DYNAMIPS_DIR/topology.net | grep image)" | tee -a $LOG_FILE
 }
 
 # Run the functions 
@@ -277,13 +294,5 @@ SetupRPKIContainer
 copyScripts
 setupDynamips
 setTimeZone
-echo "####### Installation Finished. Workshop files are located:" | tee -a $LOG_FILE
-echo "####### $WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
-echo "####### $CURRENT_DIR" | tee -a $LOG_FILE
-echo "####### $HOME/Documents/scripts/" | tee -a $LOG_FILE
-echo "####### /var/lib/lxc/$NAME/" | tee -a $LOG_FILE
-echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image."
-echo "####### Current image name in $IMAGE_DIR:" | tee -a $LOG_FILE
-echo "####### $(ls ~/virtual_labs/images | grep 720)" | tee -a $LOG_FILE
-echo "####### Current image name in topology file:" | tee -a $LOG_FILE
-echo "$(head $WORKSHOP_DYNAMIPS_DIR/topology.net)" | tee -a $LOG_FILE
+displayMessage
+
