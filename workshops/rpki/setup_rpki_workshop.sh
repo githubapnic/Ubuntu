@@ -54,19 +54,20 @@ function copyLXC()
   HOSTNAME="$1"
   IP="$2"
   VETH_NAME= $(echo $HOSTNAME | awk -F . '{print $1}')
-  echo "###### Copying template.apnictraining.net to $HOSTNAME ...." | tee -a $LOG_FILE
+  echo "###### Copying template.apnictraining.net to $HOSTNAME & $VETH_NAME" | tee -a $LOG_FILE
   if [[ $(lxc-ls -f | grep template | awk '{print $2}') == "RUNNING" ]]; then
     lxc-stop -n template.apnictraining.net >> $LOG_FILE
   fi
   lxc-copy -n template.apnictraining.net -N $HOSTNAME >> $LOG_FILE
   echo "###### Update IP and Host details to: " | tee -a $LOG_FILE
   # Update the IP address
-  sed -i 's/192.168.30.100/'"$IP"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml
-  sed -i 's/lxc.network.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' >> /var/lib/lxc/$HOSTNAME.apnictraining.net/config
+  sudo cp -p /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml &>> $LOG_FILE
+  sudo sed -i 's/192.168.30.100/'"$IP"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml &>> $LOG_FILE
+  sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' >> /var/lib/lxc/$HOSTNAME/config
   more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
   # Update host file
-  sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts
-  sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hostname
+  sudo sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts
+  sudo sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hostname
   more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
 }
 
@@ -102,7 +103,7 @@ function createLXCtemplate()
     # Update the IP address
 	sudo mkdir -p /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/ >> $LOG_FILE
     sudo cp 10-lxc.yaml /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
-	echo "lxc.network.veth.pair = template" >> /var/lib/lxc/template.apnictraining.net/config
+	echo "lxc.net.0.veth.pair = template" >> /var/lib/lxc/template.apnictraining.net/config
 	if [[ $(lxc-ls -f | grep template | awk '{print $2}') == "RUNNING" ]]; then 
       sudo lxc-stop -n template.apnictraining.net >> $LOG_FILE
     fi
@@ -268,18 +269,20 @@ function setTimeZone()
 # Display message about wheer files are located
 function displayMessage()
 {
+  echo "##########################################################" | tee -a $LOG_FILE
   echo "####### Installation Finished. Workshop files are located:" | tee -a $LOG_FILE
-  echo "####### $WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
-  echo "####### $CURRENT_DIR" | tee -a $LOG_FILE
-  echo "####### $HOME/Documents/scripts/" | tee -a $LOG_FILE
-  echo "####### /var/lib/lxc/$NAME/" | tee -a $LOG_FILE
+  echo "$WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
+  echo "$CURRENT_DIR" | tee -a $LOG_FILE
+  echo "$HOME/Documents/scripts/" | tee -a $LOG_FILE
+  echo "/var/lib/lxc/$NAME/" | tee -a $LOG_FILE
   echo
-  echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image."
+  echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image." | tee -a $LOG_FILE
   echo "####### Current image name in $IMAGE_DIR:" | tee -a $LOG_FILE
-  echo "####### $(ls ~/virtual_labs/images | grep 720)" | tee -a $LOG_FILE
+  echo "$(ls ~/virtual_labs/images | grep 720)" | tee -a $LOG_FILE
   echo
   echo "####### Current image name in topology file:" | tee -a $LOG_FILE
   echo "$(head $WORKSHOP_DYNAMIPS_DIR/topology.net | grep image)" | tee -a $LOG_FILE
+  echo "##########################################################" | tee -a $LOG_FILE
 }
 
 # Run the functions 
