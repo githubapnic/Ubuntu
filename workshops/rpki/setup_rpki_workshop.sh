@@ -53,6 +53,7 @@ function copyLXC()
 {
   HOSTNAME="$1"
   IP="$2"
+  VETH_NAME= $(echo $HOSTNAME | awk -F . '{print $1}')
   echo "###### Copying template.apnictraining.net to $HOSTNAME ...." | tee -a $LOG_FILE
   if [[ $(lxc-ls -f | grep template | awk '{print $2}') == "RUNNING" ]]; then
     lxc-stop -n template.apnictraining.net >> $LOG_FILE
@@ -61,9 +62,11 @@ function copyLXC()
   echo "###### Update IP and Host details to: " | tee -a $LOG_FILE
   # Update the IP address
   sed -i 's/192.168.30.100/'"$IP"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml
+  sed -i 's/lxc.network.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' >> /var/lib/lxc/$HOSTNAME.apnictraining.net/config
   more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
   # Update host file
   sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts
+  sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hostname
   more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
 }
 
@@ -94,11 +97,12 @@ function createLXCtemplate()
 	#sudo sed -i 's/packages_template\=\"\${packages_t/\#packages_template\=\"\${packages_t/' /usr/share/lxc/templates/lxc-ubuntu-apnic >> $LOG_FILE
     # Download and create a container
 	#sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password --packages $TEMPLATE_PACKAGES --variant minbase >> $LOG_FILE
-	sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password >> $LOG_FILE
+	sudo lxc-create -n template.apnictraining.net -t ubuntu-apnic -- --user $user --password $password &>> $LOG_FILE
     echo "###### Update IP details to 192.168.30.100" | tee -a $LOG_FILE
     # Update the IP address
 	sudo mkdir -p /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/ >> $LOG_FILE
     sudo cp 10-lxc.yaml /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
+	echo "lxc.network.veth.pair = template" >> /var/lib/lxc/template.apnictraining.net/config
 	if [[ $(lxc-ls -f | grep template | awk '{print $2}') == "RUNNING" ]]; then 
       sudo lxc-stop -n template.apnictraining.net >> $LOG_FILE
     fi
