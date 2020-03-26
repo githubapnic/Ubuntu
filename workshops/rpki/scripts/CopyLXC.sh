@@ -36,5 +36,5 @@ more /var/lib/lxc/$HOSTNAME/config | grep veth.pair
 
 # Add script to help with installation of routinator
 mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/
-sudo cp -p $(find /home/ -type f -name installRoutinator.sh) /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
+sudo cp -p $(find /home/ -type f -name installRoutinator.sh | awk 'NR==1{print $1}') /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
 chmod 744 /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
