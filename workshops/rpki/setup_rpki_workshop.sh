@@ -64,7 +64,7 @@ function copyLXC()
   # Update the IP address
   sudo cp -p /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml &>> $LOG_FILE
   sudo sed -i 's/192.168.30.100/'"$IP"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml &>> $LOG_FILE
-  sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' /var/lib/lxc/$HOSTNAME/config &>> $LOG_FILE
+  sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.net.0.veth.pair \= '"$VETH_NAME"'/' /var/lib/lxc/$HOSTNAME/config &>> $LOG_FILE
   more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
   # Add script to help with installation of routinator
   mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/ &>> $LOG_FILE
