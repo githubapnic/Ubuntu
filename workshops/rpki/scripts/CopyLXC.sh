@@ -31,10 +31,10 @@ sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/root
 more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1
 
 # Update LXC config file
-sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' /var/lib/lxc/$HOSTNAME/config &>> $LOG_FILE
+sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' /var/lib/lxc/$HOSTNAME/config
 more /var/lib/lxc/$HOSTNAME/config | grep veth.pair 
 
 # Add script to help with installation of routinator
-mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/ &>> $LOG_FILE
-sudo cp -p $(find /home/ -type f -name installRoutinator.sh) /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh &>> $LOG_FILE
-chmod 744 /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh &>> $LOG_FILE
+mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/
+sudo cp -p $(find /home/ -type f -name installRoutinator.sh) /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
+chmod 744 /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
