@@ -31,7 +31,7 @@ sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/root
 more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1
 
 # Update LXC config file
-sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' /var/lib/lxc/$HOSTNAME/config
+sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= '"$VETH_NAME"'/' /var/lib/lxc/$HOSTNAME/config
 more /var/lib/lxc/$HOSTNAME/config | grep veth.pair 
 
 # Add script to help with installation of routinator
