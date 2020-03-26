@@ -15,10 +15,11 @@ IMAGE_DIR="$HOME/virtual_labs/images"
 LXCWEBPANEL_DIR="$HOME/virtual_labs/lxcwebpanel/"
 LOG_FILE="install.log"
 NAME="rpki.apnictraining.net"
+VETH_NAME="rpki"
 NETPLAN_IP="192.168.30.240"
 USERNAME=$1
 PASSWORD=$2
-TEMPLATE_PACKAGES="openssh-server,gcc,curl,build-essential"
+TEMPLATE_PACKAGES="openssh-server gcc curl build-essential rsync"
 
 # Ensure script is run as root user (not a super secure script)
 function checkRoot()
@@ -53,7 +54,7 @@ function copyLXC()
 {
   HOSTNAME="$1"
   IP="$2"
-  VETH_NAME= $(echo $HOSTNAME | awk -F . '{print $1}')
+  VETH_NAME=$(echo $HOSTNAME | awk -F . '{print $1}')
   echo "###### Copying template.apnictraining.net to $HOSTNAME & $VETH_NAME" | tee -a $LOG_FILE
   if [[ $(lxc-ls -f | grep template | awk '{print $2}') == "RUNNING" ]]; then
     lxc-stop -n template.apnictraining.net >> $LOG_FILE
@@ -63,8 +64,12 @@ function copyLXC()
   # Update the IP address
   sudo cp -p /var/lib/lxc/template.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml &>> $LOG_FILE
   sudo sed -i 's/192.168.30.100/'"$IP"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml &>> $LOG_FILE
-  sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' >> /var/lib/lxc/$HOSTNAME/config
+  sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.network.veth.pair \= $VETH_NAME/' /var/lib/lxc/$HOSTNAME/config &>> $LOG_FILE
   more /var/lib/lxc/$HOSTNAME/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
+  # Add script to help with installation of routinator
+  mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/ &>> $LOG_FILE
+  sudo cp -p installRoutinator.sh /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh &>> $LOG_FILE
+  chmod 744 /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh &>> $LOG_FILE
   # Update host file
   sudo sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts
   sudo sed -i 's/template.apnictraining.net/'"$HOSTNAME"'/' /var/lib/lxc/$HOSTNAME/rootfs/etc/hostname
