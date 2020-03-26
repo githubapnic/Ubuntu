@@ -3,7 +3,7 @@
 # Purpose: Use this to stop all the groupXX containers
 # Usage: ./Group_Stop.sh 
 
-for i in {1..30}
+for i in {13..20}
 do 
 	if test $i -lt 10; then
 		echo STOP container group0$i.apnictraining.net 

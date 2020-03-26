@@ -3,7 +3,7 @@
 # Purpose: Use this to start all the groupXX containers
 # Usage: ./Group_Start.sh 
 
-for i in {1..30}
+for i in {13..20}
 do 
 	if test $i -lt 10; then
 		echo START container group0$i.apnictraining.net -d
