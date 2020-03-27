@@ -117,6 +117,40 @@ function createLXCtemplate()
     #updateLXCtemplate
   fi
 }
+# Create LXC template
+function createAPTContainer()
+{
+  if [[ $(lxc-ls -f | grep apt | awk -F . '{print $1}') == "apt" ]]; then
+    echo "###### apt.apnictraining.net already configured" | tee -a $LOG_FILE
+  else
+    echo "###### Creating apt.apnictraining.net" | tee -a $LOG_FILE
+	if [[ -z $USERNAME ]]; then
+	  read -p 'Enter username for APT container: ' user >> $LOG_FILE
+      read -sp 'Enter password: ' password
+	  echo
+	else
+      user=$USERNAME
+      password=$PASSWORD
+	fi
+	echo "###### Please wait while apt.apnictraining.net is downloaded and created ..." | tee -a $LOG_FILE
+	echo "###### Depending on internet speed this may take more than 10 minutes"
+    # Download and create a container
+	sudo lxc-create -n apt.apnictraining.net -t ubuntu-apnic -- --user $user --password $password &>> $LOG_FILE
+    echo "###### Update IP details to 192.168.30.248" | tee -a $LOG_FILE
+    # Update the IP address
+	sudo mkdir -p /var/lib/lxc/apt.apnictraining.net/rootfs/etc/netplan/ >> $LOG_FILE
+    sudo cp ../aptcache/10-lxc.yaml /var/lib/lxc/apt.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
+	echo "lxc.net.0.veth.pair = apt" >> /var/lib/lxc/apt.apnictraining.net/config
+	if [[ $(lxc-ls -f | grep apt | awk '{print $2}') == "RUNNING" ]]; then 
+      sudo lxc-stop -n apt.apnictraining.net >> $LOG_FILE
+    fi
+	cat /var/lib/lxc/apt.apnictraining.net/rootfs/etc/netplan/10-lxc.yaml | grep address | tee -a $LOG_FILE
+	cat /var/lib/lxc/apt.apnictraining.net/rootfs/etc/hosts | grep 127.0.1.1 | tee -a $LOG_FILE
+    # Copy apt-cache install script to server
+	sudo mkdir -p /var/lib/lxc/apt.apnictraining.net/rootfs/home/$USERNAME/scripts/ >> $LOG_FILE
+    sudo cp ../aptcache/createAPT-cache.sh /var/lib/lxc/apt.apnictraining.net/rootfs/home/$USERNAME/scripts/. >> $LOG_FILE
+  fi
+}
 
 function updateLXCtemplate()
 {
@@ -303,6 +337,7 @@ installLXC
 # installLXCwebportal
 createLXCtemplate
 SetupRPKIContainer
+createAPTContainer
 copyScripts
 setupDynamips
 setTimeZone
