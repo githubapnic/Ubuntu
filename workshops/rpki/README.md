@@ -25,6 +25,7 @@ https://www.cisco.com/c/en/us/support/routers/7200-series-routers/tsd-products-s
 * Copy Scripts to Documents folder
 * Copy dyanmips rpki toplogy files to virtual_labs folder
 * Install LXC web portal [optional]
+* Install APT cache server [optional]
 
 ## Installation
 Change to root user (if necessary) and clone Git repository:
