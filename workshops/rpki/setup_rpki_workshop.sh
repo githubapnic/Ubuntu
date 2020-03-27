@@ -19,7 +19,7 @@ VETH_NAME="rpki"
 NETPLAN_IP="192.168.30.240"
 USERNAME=$1
 PASSWORD=$2
-TEMPLATE_PACKAGES="openssh-server gcc curl build-essential rsync"
+TEMPLATE_PACKAGES="openssh-server gcc curl build-essential rsync wget jansson"
 
 # Ensure script is run as root user (not a super secure script)
 function checkRoot()
