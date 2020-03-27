@@ -271,7 +271,7 @@ function setTimeZone()
   ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 }
 
-# Display message about wheer files are located
+# Display message about where files are located
 function displayMessage()
 {
   echo "##########################################################" | tee -a $LOG_FILE
