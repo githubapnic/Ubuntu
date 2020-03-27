@@ -34,7 +34,15 @@ more /var/lib/lxc/$HOSTNAME/rootfs/etc/hosts | grep 127.0.1.1
 sudo sed -i 's/lxc.net.0.veth.pair \= template/lxc.net.0.veth.pair \= '"$VETH_NAME"'/' /var/lib/lxc/$HOSTNAME/config
 more /var/lib/lxc/$HOSTNAME/config | grep veth.pair 
 
-# Add script to help with installation of routinator
-mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/
-sudo cp -p $(find /home/ -type f -name installRoutinator.sh | awk 'NR==1{print $1}') /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
-chmod 744 /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
+# Copy scripts to the scripts folder
+function copyScripts()
+{
+	# Add script to help with installation of routinator
+	mkdir -p /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/
+	sudo cp -p $(find /home/ -type f -name installRoutinator.sh | awk 'NR==1{print $1}') /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
+	chmod 744 /var/lib/lxc/$HOSTNAME/rootfs/home/apnic/scripts/installRoutinator.sh
+}
+
+
+# Run the functions 
+#copyScripts
