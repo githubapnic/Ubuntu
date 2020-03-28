@@ -58,16 +58,17 @@ function displayMessage()
 {
   echo "##########################################################" 
   echo "## Log into the clients and point to the apt-cache server"
-  echo "edit the /etc/apt/apt.sources.list"
+  echo "edit the /etc/apt/sources.list"
   echo "insert $IP:3142 before every source list"
   echo ""
   echo "Example: "
   echo "deb http://$IP:3142/archive.ubuntu.com/ubuntu genial main restricted universe multiverse"  
   echo " "
   echo "May be able to use the sed command to search and replace"
-  echo "sed -i 's/http\:\/\//http\:\/\/$IP:3142\//'"
+  echo "  sudo cp -p /etc/apt/sources.list /etc/apt/sources.list.bak"
+  echo "  sed -i 's/http\:\/\//http\:\/\/$IP:3142\//' /etc/apt/sources.list"
   echo "then run an update to check it works"
-  echo "sudo apt-get update"
+  echo "  sudo apt-get update"
   echo "##########################################################" 
 }
 
