@@ -74,7 +74,7 @@ function displayMessage()
 
 # Run the functions 
 checkRoot
-checkParameters
+# checkParameters
 installAPTCACHE
 displayMessage
 
