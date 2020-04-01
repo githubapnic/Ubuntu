@@ -19,7 +19,8 @@ VETH_NAME="rpki"
 NETPLAN_IP="192.168.30.240"
 USERNAME=$1
 PASSWORD=$2
-TEMPLATE_PACKAGES="openssh-server gcc curl build-essential rsync wget jansson"
+#TEMPLATE_PACKAGES="openssh-server gcc curl build-essential rsync wget jansson"
+TEMPLATE_PACKAGES="openssh-server,gcc,curl,build-essential,rsync,wget,jansson"
 
 # Ensure script is run as root user (not a super secure script)
 function checkRoot()
@@ -324,6 +325,30 @@ function displayMessage()
   echo "##########################################################" | tee -a $LOG_FILE
 }
 
+# Update lxc-net to use IP range 192.168.30
+function configLXCnet()
+{
+  echo "####### Set lxcbr0 DHCP settings to 192.168.30.0 range" | tee -a $LOG_FILE
+  sudo cp -p /etc/default/lxc-net /etc/default/lxc-net.bak >> $LOG_FILE
+  sudo sed -i 's/10.0.3./192.168.30./' /etc/default/lxc-net >> $LOG_FILE
+  sudo sed -i 's/10.0.3.254/192.168.30.94/' /etc/default/lxc-net >> $LOG_FILE
+  sudo sed -i 's/192.168.30.2\,/192.168.30.65\,/' /etc/default/lxc-net >> $LOG_FILE
+  sudo sed -i 's/192.168.30.1/192.168.30.254/' /etc/default/lxc-net >> $LOG_FILE
+  sudo sed -i 's/253/30/' /etc/default/lxc-net >> $LOG_FILE
+  sudo service lxc-net restart &>> $LOG_FILE
+  sudo cat /etc/default/lxc-net | grep 192.168.30. | tee -a $LOG_FILE
+}
+
+# Update DNS resolver details
+function updateDNSresolver()
+{ 
+  echo "####### Update name server details: " | tee -a $LOG_FILE
+  sudo cp -p /etc/resolvconf/resolv.conf.d/head /etc/resolvconf/resolv.conf.d/head.bak >> $LOG_FILE
+  sudo echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/head >> $LOG_FILE
+  sudo echo "nameserver 8.8.4.4" >> /etc/resolvconf/resolv.conf.d/head >> $LOG_FILE
+  sudo cat /etc/resolvconf/resolv.conf.d/head | grep nameserver | tee -a $LOG_FILE
+}
+
 # Run the functions 
 checkRoot
 checkUbuntu
@@ -338,6 +363,8 @@ installLXC
 createLXCtemplate
 SetupRPKIContainer
 createAPTContainer
+configLXCnet
+updateDNSresolver
 copyScripts
 setupDynamips
 setTimeZone
