@@ -15,11 +15,6 @@ WORKSHOP_DYNAMIPS_DIR="$HOME/virtual_labs/routing"
 SCRIPT_DIR="$HOME/Documents/scripts/"
 IMAGE_DIR="$HOME/virtual_labs/images"
 LOG_FILE="install.log"
-NAME="routing.apnictraining.net"
-VETH_NAME="routing"
-NETPLAN_IP="192.168.30.240"
-USERNAME=$1
-PASSWORD=$2
 
 ##########################################
 # Define Functions
@@ -126,7 +121,7 @@ function enableForwarding()
 # Copy the files to the routing dynamips folder
 function setupDynamips()
 {
-  echo "###### Copy RPKI topology files" | tee -a $LOG_FILE
+  echo "###### Copy routing topology files" | tee -a $LOG_FILE
   mkdir -p $WORKSHOP_DYNAMIPS_DIR $IMAGE_DIR >> $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $IMAGE_DIR >> $LOG_FILE
   cp -R dynamips/* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
@@ -149,7 +144,6 @@ function displayMessage()
   echo "####### Installation Finished. Workshop files are located:" | tee -a $LOG_FILE
   echo "$WORKSHOP_DYNAMIPS_DIR" | tee -a $LOG_FILE
   echo "$CURRENT_DIR" | tee -a $LOG_FILE
-  echo "$HOME/Documents/scripts/" | tee -a $LOG_FILE
   echo
   echo "####### Please update $WORKSHOP_DYNAMIPS_DIR/topology.net file with the IOS image." | tee -a $LOG_FILE
   echo "####### Current image name in $IMAGE_DIR:" | tee -a $LOG_FILE
