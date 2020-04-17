@@ -1,0 +1,124 @@
+# APNIC Routing Workshop lab
+
+model = 7200
+
+[localhost:7200]
+   #[192.168.0.10]
+   
+   
+   [[7200]]
+      image = ../images/c7200-advipservicesk9-mz.152-4.S3.image
+      ram = 176
+      npe = npe-400
+      ghostios = True
+      slot1 = PA-4T
+	  idlepc=0x6318a8ac
+      #idlepc=0x60608f64
+      #idlepc=0x6316a604
+      #idlepc = 0x63178d9c
+   
+    [[ROUTER r1]]
+        console = 2001
+        aux = 3001
+        fa0/0 = r2 fa0/0
+        fa0/1 = r13 fa0/1
+        s1/0 = r3 s1/1
+        model = 7200
+    
+    [[router r2]]
+        console = 2002
+        aux = 3002
+        fa0/1 = r14 fa0/1
+        s1/0 = r4 s1/1
+        model = 7200
+    
+    [[router r3]]
+        console = 2003
+        aux = 3003
+        s1/0 = r5 s1/1
+        model = 7200
+    
+    [[router r4]]
+        console = 2004
+        aux = 3004
+        s1/0 = r6 s1/1
+        model = 7200
+    
+    [[router r5]]
+        console = 2005
+        aux = 3005
+        fa0/0 = r6 fa0/0
+        s1/0 = r7 s1/1
+        model = 7200
+    
+    [[router r6]]
+        console = 2006
+        aux = 3006
+        s1/0 = r8 s1/1
+        model = 7200
+    
+    [[router r7]]
+        console = 2007
+        aux = 3007
+        s1/0 = r9 s1/1
+        model = 7200
+
+
+[localhost:7201]
+   
+   [[7200]]
+      image = ../images/c7200-advipservicesk9-mz.152-4.S3.image
+      ram = 176
+      npe = npe-400
+      ghostios = True
+	  slot1 = PA-4T
+      idlepc=0x6318a8ac
+      #idlepc= 0x6082a1f0
+      #idlepc=  0x608a1538
+      #idlepc=  0x608a1358
+      #idlepc=  0x608c5bc8
+      #idlepc=0x60608f64
+      #idlepc=0x6316a604
+      #idlepc = 0x63178d9c
+	  
+    [[router r8]]
+        console = 2008
+        aux = 3008
+        s1/0 = r10 s1/1
+        model = 7200
+
+    [[router r9]]
+        console = 2009
+        aux = 3009
+        fa0/0 = r10 fa0/0
+        s1/0 = r11 s1/1
+        model = 7200
+    
+    [[router r10]]
+        console = 2010
+        aux = 3010
+        s1/0 = r12 s1/1
+        model = 7200
+    
+    [[router r11]]
+        console = 2011
+        aux = 3011
+        s1/0 = r13 s1/1
+        model = 7200
+    
+    [[router r12]]
+        console = 2012
+        aux = 3012
+        s1/0 = r14 s1/1
+        model = 7200
+    
+    [[router r13]]
+        console = 2013
+        aux = 3013
+        fa0/0 = r14 fa0/0
+        model = 7200
+    
+    [[router r14]]
+        console = 2014
+        aux = 3014
+        model = 7200
