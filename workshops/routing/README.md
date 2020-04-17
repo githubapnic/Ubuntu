@@ -46,4 +46,4 @@ There is an install.log file. To view the file when running the script
 tail -f install.log
 ```
 ## Acknowledgement
-The topology file is based on the workshop material by Dr. Philip Smith available at [[http://www.bgp4all.com/dokuwiki/workshops/start| BGP4ALL]] under a Creative Commons Attribution-Share Alike 4.0 International. Full terms at https://creativecommons.org/licenses/by-nc-nd/4.0
+The topology file is based on the workshop material by Dr. Philip Smith available at [BGP4ALL] (http://www.bgp4all.com/dokuwiki/workshops/start) under a Creative Commons Attribution-Share Alike 4.0 International. Full terms at https://creativecommons.org/licenses/by-nc-nd/4.0
