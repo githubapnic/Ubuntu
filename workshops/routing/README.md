@@ -38,7 +38,7 @@ sudo ./setup_routing_workshop.sh
 ```
 
 ## Topology diagram
-![Topology diagram](/images/topology_diagram.png)
+![topology diagram](/images/topology_diagram.png)
 
 ## Troubleshooting
 There is an install.log file. To view the file when running the script
