@@ -46,3 +46,22 @@ There is an install.log file. To view the file when running the script
 ```
 tail -f install.log
 ```
+# To start the rpki workshop lab
+```
+cd ~/Documents/scripts
+screen
+sudo ./start_rpkiServer_routers.sh
+
+# detach from the dynagen screen
+press ctrl+a d 
+
+# Start the tap interfaces
+sudo ./start_rpki_tap.sh
+
+# confirm containers are running
+sudo lxc-ls -f | grep run
+
+# confirm tap interfaces are connected to bridge
+brctl show
+```
+
