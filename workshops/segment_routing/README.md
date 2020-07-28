@@ -42,9 +42,10 @@ tail -f install.log
 ```
 # Importing OVA
 Before starting the GNS3 project, you will need to import the OVA into virtualbox, to setup the XRV virtual machines for R1 to R6
+* OVA is not supplied for the XRV virtual image
 
 # To start the Segment routing workshop lab
-* Open GNS3 and open existing project, browse to the location of stored projects, then dowuble click to open.
+* Open GNS3 and open existing project, browse to the location of stored projects, then double click to open.
 * Start one router at a time
 
 # Access the routers over a network
