@@ -28,7 +28,7 @@ Change to root user (if necessary) and clone Git repository:
 sudo su - 
 git clone https://github.com/githubapnic/Ubuntu.git
 ```
-Enter the new directory, change variables , update permissions, and run install_packages.sh, answer the questions:
+Enter the new directory, change variables , update permissions, and run setup_sr_workshop.sh, answer the questions:
 ```
 cd Ubuntu/workshops/segment_routing
 vi setup_sr_workshop.sh
