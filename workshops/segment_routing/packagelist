@@ -1,0 +1,14 @@
+gnome-control-center
+software-properties-common
+python-pip
+python3-pip
+python3-pyqt5 
+python3-pyqt5-dbg 
+PyQt5.QtSvg 
+PyQt5.QtWebSockets
+make
+libpcap-dev
+qemu-kvm
+bridge-utils
+virtinst
+net-tools
