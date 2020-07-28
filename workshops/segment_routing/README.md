@@ -35,4 +35,20 @@ vi setup_sr_workshop.sh
 chmod 744 setup_sr_workshop.sh
 sudo ./setup_sr_workshop.sh
 ```
+## Troubleshooting
+There is an install.log file. To view the file when running the script
+```
+tail -f install.log
+```
+# Importing OVA
+Before starting the GNS3 project, you will need to import the OVA into virtualbox, to setup the XRV virtual machines for R1 to R6
 
+# To start the Segment routing workshop lab
+* Open GNS3 and open existing project, browse to the location of stored projects, then dowuble click to open.
+* Start one router at a time
+
+# Access the routers over a network
+```
+ssh <IP address>
+telnet localhost 5000 # To access Router 1
+```
