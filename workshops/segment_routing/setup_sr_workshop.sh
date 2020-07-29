@@ -84,8 +84,8 @@ function installxfce4()
 function installxrdp()
 {
   echo "###### Installing xrdp Packages" | tee -a $LOG_FILE
-  apt-get install -qq xfce4 >> $LOG_FILE
-  dpkg -l xfce4 &> /dev/null && echo "Success!" 
+  apt-get install -qq xrdp >> $LOG_FILE
+  dpkg -l xrdp &> /dev/null && echo "Success!" 
   systemctl enable xrdp | tee -a $LOG_FILE
   echo xfce4-session >~/.xsession | tee -a $LOG_FILE
   systemctl restart xrdp | tee -a $LOG_FILE
@@ -292,10 +292,8 @@ function createRestrictedUser()
     user=$USERNAME
     password=$PASSWORD
   fi
-  sudo useradd -m $user -s /bin/rbash | tee -a $LOG_FILE
-  sudo chpasswd << 'END'
-     $user:$password
-  END
+  useradd -m $user -s /bin/rbash | tee -a $LOG_FILE
+  echo "$user:$password" | chpasswd 
   mkdir -p /home/$user/bin | tee -a $LOG_FILE
   ln -s /usr/bin/telnet /home/$user/bin | tee -a $LOG_FILE
   ln -s /bin/ping /home/$user/bin | tee -a $LOG_FILE
@@ -309,6 +307,7 @@ SetupGNSProject()
 
   echo "###### Downloading GNS3 Segment Routing project SR-1" | tee -a $LOG_FILE
   wget -q $SR1_URL >> $LOG_FILE || echo "Error downloading SR-1." | tee -a $LOG_FILE
+  mkdir -p $PROJECT_DIR
   unzip SR1-2020.zip -d $PROJECT_DIR | tee -a $LOG_FILE
 }
 
@@ -338,7 +337,7 @@ createRestrictedUser
 SetupGNSProject
 InstallVirtualBox
 
-echo "####### Installation Finished. | tee -a $LOG_FILE
+echo "####### Installation Finished." | tee -a $LOG_FILE
 echo " Make sure to import the OVA into virtualbox" | tee -a $LOG_FILE
 echo " before starting the GNS3 project" | tee -a $LOG_FILE
 Echo " Please restart to complete the installation." | tee -a $LOG_FILE
