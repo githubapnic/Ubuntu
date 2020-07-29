@@ -309,6 +309,7 @@ SetupGNSProject()
   wget -q $SR1_URL >> $LOG_FILE || echo "Error downloading SR-1." | tee -a $LOG_FILE
   mkdir -p $PROJECT_DIR
   unzip SR1-2020.zip -d $PROJECT_DIR | tee -a $LOG_FILE
+  chown -R $SUDO_USER:$SUDO_USER $GNS_DIR
 }
 
 # Run the functions 
