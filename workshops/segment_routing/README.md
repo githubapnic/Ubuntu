@@ -7,6 +7,7 @@ This script is designed to work on Ubuntu 18.04 LTS. It should be run under root
 * Disable auto update
 * Update system packages
 * Install required packages
+* Install SSH server
 * Install XRDP for remote desktop access
 * Install GNS3-Server
 * Install GNS3-GUI
@@ -14,11 +15,11 @@ This script is designed to work on Ubuntu 18.04 LTS. It should be run under root
 * Install Dynamips
 * Install Dynagen
 * Install uBridge
-* Install VPCS
+* Install VPCS [optional]
 * Configure UFW [optional]
 * Configure GNS3 [optional]
 * Install Wireshark
-* Create a restricted user
+* Create a restricted user [optional]
 * Setup GNS3 project for Segment Routing
 * Install Virtualbox
 
