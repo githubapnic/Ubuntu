@@ -325,8 +325,8 @@ removePackages
 disableAutoUpdates
 updatePackages
 installPackages
-installxrdp
 installSSH
+installxrdp
 installGNS3
 installGNS3-GUI
 #installGNS3-IOU
