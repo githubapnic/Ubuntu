@@ -314,6 +314,7 @@ SetupGNSProject()
 # Run the functions 
 checkRoot
 checkUbuntu
+updatePackages
 installxfce4
 removePackages
 disableAutoUpdates
