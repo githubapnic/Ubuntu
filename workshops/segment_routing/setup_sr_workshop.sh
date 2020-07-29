@@ -11,9 +11,9 @@
 # Declare variables
 CURRENT_DIR=$(pwd)
 GNS_DIR="$HOME/GNS3"
-IMAGE_DIR="$HOME/GNS3/Images"
-APPLIANCE_DIR="$HOME/GNS3/Appliances"
-PROJECT_DIR="$HOME/GNS3/Project"
+IMAGE_DIR="$HOME/GNS3/images"
+APPLIANCE_DIR="$HOME/GNS3/appliances"
+PROJECT_DIR="$HOME/GNS3/projects"
 CONFIG_DIR="$HOME/.config"
 LOG_FILE="install.log"
 VPCS_URL="http://sourceforge.net/projects/vpcs/files/0.8/vpcs_0.8b_Linux64/download"
