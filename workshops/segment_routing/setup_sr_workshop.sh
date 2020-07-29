@@ -83,6 +83,7 @@ function installxfce4()
 # Install and enable xrdp
 function installxrdp()
 {
+  # https://docs.microsoft.com/en-us/azure/virtual-machines/linux/use-remote-desktop
   echo "###### Installing xrdp Packages" | tee -a $LOG_FILE
   apt-get install -qq xrdp >> $LOG_FILE
   dpkg -l xrdp &> /dev/null && echo "Success!" 
@@ -338,11 +339,11 @@ installUbridge
 #configureGNS3
 #installwireshark
 updatePackages
-createRestrictedUser
+#createRestrictedUser
 SetupGNSProject
 InstallVirtualBox
 
 echo "####### Installation Finished." | tee -a $LOG_FILE
 echo " Make sure to import the OVA into virtualbox" | tee -a $LOG_FILE
 echo " before starting the GNS3 project" | tee -a $LOG_FILE
-Echo " Please restart to complete the installation." | tee -a $LOG_FILE
+echo " Please restart to complete the installation." | tee -a $LOG_FILE
