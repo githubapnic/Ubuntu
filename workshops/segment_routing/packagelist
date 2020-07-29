@@ -12,3 +12,6 @@ qemu-kvm
 bridge-utils
 virtinst
 net-tools
+dkms
+screen
+unzip

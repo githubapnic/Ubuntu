@@ -292,16 +292,16 @@ function createRestrictedUser()
     user=$USERNAME
     password=$PASSWORD
   fi
-  sudo useradd -m $USERNAME -s /bin/rbash | tee -a $LOG_FILE
+  sudo useradd -m $user -s /bin/rbash | tee -a $LOG_FILE
   sudo chpasswd << 'END'
-     $USERNAME:$PASSWORD
+     $user:$password
   END
-  mkdir -p /home/$USERNAME/bin | tee -a $LOG_FILE
-  ln -s /usr/bin/telnet /home/$USERNAME/bin | tee -a $LOG_FILE
-  ln -s /bin/ping /home/$USERNAME/bin | tee -a $LOG_FILE
-  ln -s /usr/bin/ssh /home/$USERNAME/bin | tee -a $LOG_FILE
-  chown root. /home/$USERNAME/.profile | tee -a $LOG_FILE
-  chmod 755 /home/$USERNAME/.profile | tee -a $LOG_FILE
+  mkdir -p /home/$user/bin | tee -a $LOG_FILE
+  ln -s /usr/bin/telnet /home/$user/bin | tee -a $LOG_FILE
+  ln -s /bin/ping /home/$user/bin | tee -a $LOG_FILE
+  ln -s /usr/bin/ssh /home/$user/bin | tee -a $LOG_FILE
+  chown root. /home/$user/.profile | tee -a $LOG_FILE
+  chmod 755 /home/$user/.profile | tee -a $LOG_FILE
 }
 
 SetupGNSProject()
@@ -329,10 +329,10 @@ installGNS3-GUI
 installDynamips
 installDynagen
 installUbridge
-installVPCS
+#installVPCS
 #configUFW
 #configureGNS3
-installwireshark
+#installwireshark
 updatePackages
 createRestrictedUser
 SetupGNSProject
