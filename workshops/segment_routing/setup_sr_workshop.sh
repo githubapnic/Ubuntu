@@ -284,6 +284,7 @@ function disableAutoUpdates()
 
 function createRestrictedUser()
 {
+  echo "###### Create Restricted User" | tee -a $LOG_FILE
   if [[ -z $USERNAME ]]; then
     read -p 'Enter Restricted username for SSH access: ' user >> $LOG_FILE
     read -sp 'Enter password: ' password
@@ -307,9 +308,11 @@ SetupGNSProject()
 
   echo "###### Downloading GNS3 Segment Routing project SR-1" | tee -a $LOG_FILE
   wget -q $SR1_URL >> $LOG_FILE || echo "Error downloading SR-1." | tee -a $LOG_FILE
-  mkdir -p $PROJECT_DIR
+  mkdir -p $PROJECT_DIR | tee -a $LOG_FILE
   unzip SR1-2020.zip -d $PROJECT_DIR | tee -a $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $GNS_DIR
+  mkdir -p $HOME/iso
+  chown -R $SUDO_USER:$SUDO_USER $HOME/iso
 }
 
 # Run the functions 
