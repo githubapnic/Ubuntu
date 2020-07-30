@@ -262,6 +262,8 @@ function SetupRootContainer()
     copyLXC $ROOTSERVERNAME $ROOT_NETPLAN_IP $ROOT_VETH_NAME
 	# echo "lxc.net.0.veth.pair = $ROOT_VETH_NAME" >> /var/lib/lxc/$ROOTSERVERNAME/config
 	wget -q $ROOT_URL >> $LOG_FILE || echo "Error downloading Root files." | tee -a $LOG_FILE
+	mv /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list.old
+	cp /etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list
 	lxc-start $ROOTSERVERNAME
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get update
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get -y upgrade
@@ -285,13 +287,15 @@ function SetupGtldContainer()
     copyLXC $GTLDSERVERNAME $GTLD_NETPLAN_IP $GTLD_VETH_NAME
 	# echo "lxc.net.0.veth.pair = $GTLD_VETH_NAME" >> /var/lib/lxc/$GTLDSERVERNAME/config
 	wget -q $GTLD_URL >> $LOG_FILE || echo "Error downloading GTLD." | tee -a $LOG_FILE
+	mv /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list.old
+	cp /etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list
 	lxc-start $GTLDSERVERNAME
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get update | tee -a $LOG_FILE
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get -y upgrade | tee -a $LOG_FILE
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen
 	lxc-stop $GTLDSERVERNAME
-	#mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
-	unzip -q named-gtld.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
+	#mkdir -p /var/lib/lxc/$GTLDSERVERNAME/rootfs/var/named/master
+	unzip -q named-gtld.zip -d /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
 }
 
 
