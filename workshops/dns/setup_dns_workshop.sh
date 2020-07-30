@@ -261,12 +261,14 @@ function SetupRootContainer()
     echo "###### Creating Root container" | tee -a $LOG_FILE
     copyLXC $ROOTSERVERNAME $ROOT_NETPLAN_IP $ROOT_VETH_NAME
 	# echo "lxc.net.0.veth.pair = $ROOT_VETH_NAME" >> /var/lib/lxc/$ROOTSERVERNAME/config
-	wget -q $ROOT_URL >> $LOG_FILE || echo "Error downloading SR-1." | tee -a $LOG_FILE
+	wget -q $ROOT_URL >> $LOG_FILE || echo "Error downloading Root files." | tee -a $LOG_FILE
 	lxc-start $ROOTSERVERNAME
-	lxc-attach sudo apt-get install -y bind bind-utils bind-libs 
+	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get update
+	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get -y upgrade
+	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen
 	lxc-stop $ROOTSERVERNAME
-	mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
-	unzip -q named-root.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master | tee -a $LOG_FILE
+	#mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
+	unzip -q named-root.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
 }
 
 # Setup gtld DNS container
@@ -282,9 +284,14 @@ function SetupGtldContainer()
     echo "###### Creating GTLD container" | tee -a $LOG_FILE
     copyLXC $GTLDSERVERNAME $GTLD_NETPLAN_IP $GTLD_VETH_NAME
 	# echo "lxc.net.0.veth.pair = $GTLD_VETH_NAME" >> /var/lib/lxc/$GTLDSERVERNAME/config
-	wget -q $GTLD_URL >> $LOG_FILE || echo "Error downloading SR-1." | tee -a $LOG_FILE
-	mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
-	unzip -q named-gtld.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master | tee -a $LOG_FILE
+	wget -q $GTLD_URL >> $LOG_FILE || echo "Error downloading GTLD." | tee -a $LOG_FILE
+	lxc-start $GTLDSERVERNAME
+	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get update | tee -a $LOG_FILE
+	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get -y upgrade | tee -a $LOG_FILE
+	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen
+	lxc-stop $GTLDSERVERNAME
+	#mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
+	unzip -q named-gtld.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
 }
 
 
