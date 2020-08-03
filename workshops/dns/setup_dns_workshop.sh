@@ -269,7 +269,7 @@ function SetupRootContainer()
 	lxc-start $ROOTSERVERNAME
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get update
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get -y upgrade
-	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen
+	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip
 	lxc-stop $ROOTSERVERNAME
 	#mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
 	unzip -q named-root.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
@@ -296,7 +296,7 @@ function SetupGtldContainer()
 	lxc-start $GTLDSERVERNAME
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get update | tee -a $LOG_FILE
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get -y upgrade | tee -a $LOG_FILE
-	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen
+	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip
 	lxc-stop $GTLDSERVERNAME
 	#mkdir -p /var/lib/lxc/$GTLDSERVERNAME/rootfs/var/named/master
 	unzip -q named-gtld.zip -d /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
