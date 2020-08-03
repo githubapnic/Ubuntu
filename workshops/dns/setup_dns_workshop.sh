@@ -350,10 +350,23 @@ function displayMessage()
 function updateIPtables()
 {
   echo "####### Update iptables: " | tee -a $LOG_FILE
-  sudo apt install -qq iptables-persistent netfilter-persistent | tee -a $LOG_FILE
+  if [[ $(checkSuccess iptables-persistent) == "Success!" ]]; then
+    echo "###### iptables-persistent already installed" | tee -a $LOG_FILE
+  else
+    echo "####### Installing iptables-persistent" | tee -a $LOG_FILE
+	sudo apt install -qq iptables-persistent netfilter-persistent | tee -a $LOG_FILE
+  fi
+  if [[ $(checkSuccess netfilter-persistent) == "Success!" ]]; then
+    echo "###### netfilter-persistent already installed" | tee -a $LOG_FILE
+  else
+    echo "####### Installing netfilter-persistent" | tee -a $LOG_FILE
+	sudo apt install -qq iptables-persistent netfilter-persistent | tee -a $LOG_FILE
+  fi
+  sudo iptables -t nat -D POSTROUTING -s 192.168.100.0/24 ! -d 192.168.100.0/24 -j MASQUERADE >> $LOG_FILE
   sudo iptables -t nat -A POSTROUTING -s 192.168.100.0/24 ! -d 192.168.100.0/24 -j MASQUERADE >> $LOG_FILE
   sudo netfilter-persistent save >> $LOG_FILE
   sudo netfilter-persistent reload >> $LOG_FILE
+  sleep 7
 }
 
 ##########################################
