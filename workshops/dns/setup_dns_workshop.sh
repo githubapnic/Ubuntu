@@ -345,6 +345,17 @@ function displayMessage()
   echo "####### Installation Finished.   #########################" | tee -a $LOG_FILE
   echo "##########################################################" | tee -a $LOG_FILE
 }
+
+# Update IPtables to allow traffic from 192.168.100.0/16 to Internet
+function updateIPtables()
+{
+  echo "####### Update iptables: " | tee -a $LOG_FILE
+  sudo apt install -qq iptables-persistent netfilter-persistent | tee -a $LOG_FILE
+  sudo iptables -t nat -A POSTROUTING -s 192.168.100.0/24 ! -d 192.168.100.0/24 -j MASQUERADE >> $LOG_FILE
+  sudo netfilter-persistent save >> $LOG_FILE
+  sudo netfilter-persistent reload >> $LOG_FILE
+}
+
 ##########################################
 # Run the functions 
 ##########################################
@@ -360,6 +371,7 @@ installLXC
 # installLXCwebportal
 createLXCtemplate
 configLXCnet
+updateIPtables
 SetupRootContainer
 SetupGtldContainer
 # createAPTContainer
