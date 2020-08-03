@@ -329,6 +329,7 @@ function configLXCnet()
   sudo sed -i 's/192.168.30.2\,/192.168.30.65\,/' /etc/default/lxc-net >> $LOG_FILE
   sudo sed -i 's/192.168.30.1/192.168.30.254/' /etc/default/lxc-net >> $LOG_FILE
   sudo sed -i 's/253/30/' /etc/default/lxc-net >> $LOG_FILE
+  sudo sed -i 's/255.255.255.0/255.255.0.0/' /etc/default/lxc-net >> $LOG_FILE
   sudo service lxc-net restart &>> $LOG_FILE
   sudo cat /etc/default/lxc-net | grep 192.168.30. | tee -a $LOG_FILE
 }
