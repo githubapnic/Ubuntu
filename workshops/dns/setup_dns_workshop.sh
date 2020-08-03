@@ -274,6 +274,7 @@ function SetupRootContainer()
     copyLXC $ROOTSERVERNAME $ROOT_NETPLAN_IP $ROOT_VETH_NAME
 	cp /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml.old >> $LOG_FILE
 	sudo sed -i 's/24/16/' /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
+	updateDNSresolver("/var/lib/lxc/$ROOTSERVERNAME/rootfs")
 	# echo "lxc.net.0.veth.pair = $ROOT_VETH_NAME" >> /var/lib/lxc/$ROOTSERVERNAME/config
 	wget -q $ROOT_URL >> $LOG_FILE || echo "Error downloading Root files." | tee -a $LOG_FILE
 	mv /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list.old
@@ -302,7 +303,7 @@ function SetupGtldContainer()
     copyLXC $GTLDSERVERNAME $GTLD_NETPLAN_IP $GTLD_VETH_NAME
 	cp /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/netplan/10-lxc.yaml /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/netplan/10-lxc.yaml.old >> $LOG_FILE
 	sed -i 's/24/16/' /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
-	
+	updateDNSresolver("/var/lib/lxc/$GTLDSERVERNAME/rootfs")
 	# echo "lxc.net.0.veth.pair = $GTLD_VETH_NAME" >> /var/lib/lxc/$GTLDSERVERNAME/config
 	wget -q $GTLD_URL >> $LOG_FILE || echo "Error downloading GTLD." | tee -a $LOG_FILE
 	mv /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list.old
@@ -330,11 +331,12 @@ function copyScripts()
 # Update DNS resolver details
 function updateDNSresolver()
 { 
+  path=$1
   echo "####### Update name server details: " | tee -a $LOG_FILE
-  sudo cp -p /etc/resolvconf/resolv.conf.d/head /etc/resolvconf/resolv.conf.d/head.bak >> $LOG_FILE
-  sudo echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/head >> $LOG_FILE
-  sudo echo "nameserver 8.8.4.4" >> /etc/resolvconf/resolv.conf.d/head >> $LOG_FILE
-  sudo cat /etc/resolvconf/resolv.conf.d/head | grep nameserver | tee -a $LOG_FILE
+  cp -p $path/etc/resolvconf/resolv.conf.d/head $path/etc/resolvconf/resolv.conf.d/head.bak >> $LOG_FILE
+  echo "nameserver 8.8.8.8" >> $path/etc/resolvconf/resolv.conf.d/head >> $LOG_FILE
+  echo "nameserver 8.8.4.4" >> $path/etc/resolvconf/resolv.conf.d/head >> $LOG_FILE
+  cat $path/etc/resolvconf/resolv.conf.d/head | grep nameserver | tee -a $LOG_FILE
 }
 
 # Update lxc-net to use IP range 192.168.30
