@@ -274,11 +274,13 @@ function SetupRootContainer()
     copyLXC $ROOTSERVERNAME $ROOT_NETPLAN_IP $ROOT_VETH_NAME
 	cp /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml.old >> $LOG_FILE
 	sudo sed -i 's/24/16/' /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
-	updateDNSresolver("/var/lib/lxc/$ROOTSERVERNAME/rootfs")
+	# updateDNSresolver "\/var/\lib\/lxc\/$ROOTSERVERNAME\/rootfs"
 	# echo "lxc.net.0.veth.pair = $ROOT_VETH_NAME" >> /var/lib/lxc/$ROOTSERVERNAME/config
 	wget -q $ROOT_URL >> $LOG_FILE || echo "Error downloading Root files." | tee -a $LOG_FILE
 	mv /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list.old
 	cp /etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list
+	lxc-start $ROOTSERVERNAME
+	lxc-stop $ROOTSERVERNAME
 	lxc-start $ROOTSERVERNAME
 	lxc-attach -n $ROOTSERVERNAME -- cat /etc/netplan/10-lxc.yaml
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get update
@@ -303,11 +305,13 @@ function SetupGtldContainer()
     copyLXC $GTLDSERVERNAME $GTLD_NETPLAN_IP $GTLD_VETH_NAME
 	cp /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/netplan/10-lxc.yaml /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/netplan/10-lxc.yaml.old >> $LOG_FILE
 	sed -i 's/24/16/' /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
-	updateDNSresolver("/var/lib/lxc/$GTLDSERVERNAME/rootfs")
+	#updateDNSresolver("/var/lib/lxc/$GTLDSERVERNAME/rootfs")
 	# echo "lxc.net.0.veth.pair = $GTLD_VETH_NAME" >> /var/lib/lxc/$GTLDSERVERNAME/config
 	wget -q $GTLD_URL >> $LOG_FILE || echo "Error downloading GTLD." | tee -a $LOG_FILE
 	mv /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list.old
 	cp /etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list
+	lxc-start $GTLDSERVERNAME
+	lxc-stop $GTLDSERVERNAME
 	lxc-start $GTLDSERVERNAME
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get update | tee -a $LOG_FILE
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get -y upgrade | tee -a $LOG_FILE
