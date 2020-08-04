@@ -279,16 +279,15 @@ function SetupRootContainer()
 	wget -q $ROOT_URL >> $LOG_FILE || echo "Error downloading Root files." | tee -a $LOG_FILE
 	mv /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list.old
 	cp /etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list
-	lxc-start $ROOTSERVERNAME
-	sleep 3
-	cat /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml
-	lxc-stop $ROOTSERVERNAME
+	cat /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml >> $LOG_FILE
 	lxc-start $ROOTSERVERNAME
 	echo "###### Updating Root container" | tee -a $LOG_FILE
-	lxc-attach -n $ROOTSERVERNAME -- cat /etc/netplan/10-lxc.yaml
-	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get update
-	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get -y upgrade
-	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip
+	lxc-attach -n $ROOTSERVERNAME -- sudo netplan apply --debug >> $LOG_FILE
+	lxc-attach -n $ROOTSERVERNAME -- ping -c4 8.8.8.8 >> $LOG_FILE
+	lxc-attach -n $ROOTSERVERNAME -- cat /etc/netplan/10-lxc.yaml >> $LOG_FILE
+	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get update >> $LOG_FILE
+	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get -y upgrade >> $LOG_FILE
+	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip >> $LOG_FILE
 	lxc-stop $ROOTSERVERNAME
 	#mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
 	unzip -q named-root.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
@@ -314,12 +313,12 @@ function SetupGtldContainer()
 	mv /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list.old
 	cp /etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list
 	lxc-start $GTLDSERVERNAME
-	sleep 3
-	lxc-stop $GTLDSERVERNAME
-	lxc-start $GTLDSERVERNAME
-	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get update | tee -a $LOG_FILE
-	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get -y upgrade | tee -a $LOG_FILE
-	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip
+	lxc-attach -n $GTLDSERVERNAME -- sudo netplan apply --debug >> $LOG_FILE
+	lxc-attach -n $GTLDSERVERNAME -- ping -c4 8.8.8.8 >> $LOG_FILE
+	lxc-attach -n $GTLDSERVERNAME -- cat /etc/netplan/10-lxc.yaml >> $LOG_FILE
+	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get update >> $LOG_FILE
+	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get -y upgrade >> $LOG_FILE
+	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip >> $LOG_FILE
 	lxc-stop $GTLDSERVERNAME
 	#mkdir -p /var/lib/lxc/$GTLDSERVERNAME/rootfs/var/named/master
 	unzip -q named-gtld.zip -d /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
