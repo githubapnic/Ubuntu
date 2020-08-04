@@ -290,7 +290,7 @@ function SetupRootContainer()
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip >> $LOG_FILE
 	lxc-stop $ROOTSERVERNAME
 	#mkdir -p /var/lib/lxc/$ROOTSERVERNAME/rootfs/var/named/master
-	unzip -q named-root.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
+	unzip -o -q named-root.zip -d /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
 }
 
 # Setup gtld DNS container
@@ -321,7 +321,7 @@ function SetupGtldContainer()
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get install -y build-essential dnsutils curl bind9 bind9utils bind9-doc net-tools screen unzip >> $LOG_FILE
 	lxc-stop $GTLDSERVERNAME
 	#mkdir -p /var/lib/lxc/$GTLDSERVERNAME/rootfs/var/named/master
-	unzip -q named-gtld.zip -d /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
+	unzip -o -q named-gtld.zip -d /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/bind/ | tee -a $LOG_FILE
 }
 
 
