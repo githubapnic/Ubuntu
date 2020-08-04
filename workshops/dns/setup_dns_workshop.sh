@@ -20,8 +20,8 @@ ROOT_NETPLAN_IP="192.168.100.250"
 GTLDSERVERNAME="x.gtld-servers.net"
 GTLD_VETH_NAME="gtld"
 GTLD_NETPLAN_IP="192.168.100.251"
-ROOT_URL="https://github.com/githubapnic/Ubuntu/blob/master/workshops/dns/named-root.zip"
-GTLD_URL="https://github.com/githubapnic/Ubuntu/blob/master/workshops/dns/named-gtld.zip"
+ROOT_URL="https://raw.github.com/githubapnic/Ubuntu/master/workshops/dns/named-root.zip"
+GTLD_URL="https://raw.github.com/githubapnic/Ubuntu/master/workshops/dns/named-gtld.zip"
 USERNAME=$1
 PASSWORD=$2
 
@@ -389,7 +389,27 @@ function updateIPtables()
   sudo iptables -t nat -A POSTROUTING -s 192.168.100.0/24 ! -d 192.168.100.0/24 -j MASQUERADE >> $LOG_FILE
   sudo netfilter-persistent save >> $LOG_FILE
   sudo netfilter-persistent reload >> $LOG_FILE
-  sleep 7
+}
+
+function createRestrictedUser()
+{
+  echo "###### Create Restricted User" | tee -a $LOG_FILE
+  if [[ -z $USERNAME ]]; then
+    read -p 'Enter Restricted username for SSH access: ' user >> $LOG_FILE
+    read -sp 'Enter password: ' password
+    echo
+  else
+    user=$USERNAME
+    password=$PASSWORD
+  fi
+  useradd -m $user -s /bin/rbash | tee -a $LOG_FILE
+  echo "$user:$password" | chpasswd 
+  mkdir -p /home/$user/bin | tee -a $LOG_FILE
+  ln -s /usr/bin/telnet /home/$user/bin | tee -a $LOG_FILE
+  ln -s /bin/ping /home/$user/bin | tee -a $LOG_FILE
+  ln -s /usr/bin/ssh /home/$user/bin | tee -a $LOG_FILE
+  chown root. /home/$user/.profile | tee -a $LOG_FILE
+  chmod 755 /home/$user/.profile | tee -a $LOG_FILE
 }
 
 ##########################################
@@ -414,5 +434,6 @@ SetupGtldContainer
 # createAPTContainer
 # updateDNSresolver
 # copyScripts
+# createRestrictedUser
 displayMessage
 
