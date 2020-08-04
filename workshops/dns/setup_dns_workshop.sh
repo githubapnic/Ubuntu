@@ -280,8 +280,11 @@ function SetupRootContainer()
 	mv /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list.old
 	cp /etc/apt/sources.list /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/apt/sources.list
 	lxc-start $ROOTSERVERNAME
+	sleep 3
+	cat /var/lib/lxc/$ROOTSERVERNAME/rootfs/etc/netplan/10-lxc.yaml
 	lxc-stop $ROOTSERVERNAME
 	lxc-start $ROOTSERVERNAME
+	echo "###### Updating Root container" | tee -a $LOG_FILE
 	lxc-attach -n $ROOTSERVERNAME -- cat /etc/netplan/10-lxc.yaml
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get update
 	lxc-attach -n $ROOTSERVERNAME -- sudo apt-get -y upgrade
@@ -311,6 +314,7 @@ function SetupGtldContainer()
 	mv /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list.old
 	cp /etc/apt/sources.list /var/lib/lxc/$GTLDSERVERNAME/rootfs/etc/apt/sources.list
 	lxc-start $GTLDSERVERNAME
+	sleep 3
 	lxc-stop $GTLDSERVERNAME
 	lxc-start $GTLDSERVERNAME
 	lxc-attach -n $GTLDSERVERNAME -- sudo apt-get update | tee -a $LOG_FILE
