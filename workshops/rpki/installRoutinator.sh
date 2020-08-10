@@ -10,6 +10,6 @@ sudo apt-get update && sudo apt-get dist-upgrade
 # su - apnic
 curl https://sh.rustup.rs -sSf | sh
 source $HOME/.cargo/env
-cargo install routinator 
+cargo install routinator -f --version 0.7.1-rc2 routinator
 routinator init --accept-arin-rpa
 routinator -v vrps 
