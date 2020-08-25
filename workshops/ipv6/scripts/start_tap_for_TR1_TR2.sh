@@ -11,10 +11,12 @@ BRIDGENAME=$1
 # Check if Bridgename exists
 if [[ -z $BRIDGENAME ]]; then
   BRIDGENAME="LAN"
+  # brctl show | cut -f 1 | sort -u | grep -v "bridge name" | grep -v "^$" | xargs -I{} ip add show {}
 fi
 
 for i in {1..2}
 do 
+  echo "Assigning tap-lan$i to $BRIDGENAME bridge"
   sudo ifconfig tap-lan$i up
   sudo brctl addif $BRIDGENAME tap-lan$i
   sleep 1
