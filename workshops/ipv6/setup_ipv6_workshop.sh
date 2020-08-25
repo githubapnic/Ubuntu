@@ -118,6 +118,16 @@ function enableForwarding()
   sysctl -p /etc/sysctl.conf | tee -a $LOG_FILE
 }
 
+# Copy scripts to the Documents folder
+function copyScripts()
+{
+  echo "###### Copy some useful LXC scripts" | tee -a $LOG_FILE
+  mkdir -p $SCRIPT_DIR >> $LOG_FILE
+  cp scripts/*.* $SCRIPT_DIR/. >> $LOG_FILE
+  chmod u+x $SCRIPT_DIR/*.sh >> $LOG_FILE
+  chown -R $SUDO_USER:$SUDO_USER $SCRIPT_DIR >> $LOG_FILE
+}
+
 # Copy the files to the IPv6 dynamips folder
 function setupDynamips()
 {
@@ -165,6 +175,7 @@ installScreen
 installDynamips
 installDynagen
 enableForwarding
+copyScripts
 setupDynamips
 setTimeZone
 displayMessage
