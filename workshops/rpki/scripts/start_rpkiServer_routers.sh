@@ -5,6 +5,7 @@
 # Usage: ./start_rpkiServer_routers.sh
 
 sudo lxc-start -d -n rpki.apnictraining.net
+sudo lxc-attach -n rpki.apnictraining.net -- su apnic -c 'source $HOME/.cargo/env && routinator server --rtr 192.168.30.240:3323 --refresh=300 --detach && netstat -ltnp'
 sleep 2
 cd $HOME/virtual_labs/rpki/
 sudo ./run-dynamips
