@@ -167,7 +167,7 @@ model = 7200
       aux = 3038
       fa0/0 = r8 fa0/0
       model = 7200
-      cnfg = ./r2.cfg
+      cnfg = ./a8.cfg
 
   [[ROUTER r9]]
       console = 2009
