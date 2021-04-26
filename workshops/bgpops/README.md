@@ -1,4 +1,4 @@
-# Install Packages for Routing workshop
+# Install Packages for BGP Ops workshop
 ## Requirements
 This script is designed to work on Ubuntu 18.04 LTS. It should be run under root (not suitable for a production environment).
 
