@@ -1,4 +1,4 @@
-# Install Packages for MPLS Fundamentals workshop
+# Install Packages for MPLS Fundamentals Workshop
 ## Requirements
 This script is designed to work on Ubuntu 18.04 LTS. It should be run under root (not suitable for a production environment).
 
@@ -19,9 +19,9 @@ https://www.cisco.com/c/en/us/support/routers/7200-series-routers/tsd-products-s
 * Install Dynamips
 * Install Dynagen
 * Enable IPv6 and IPv4 Forwarding
-* Copy Scripts to Documents folder
-* Copy dynamips MPLS toplogy files to virtual_labs folder
-* Create an APT cache server [optional]
+* Copy dynamips routing toplogy files to virtual_labs folder
+* Configure post-routing rules [optional]
+* Add iptable rules [optional]
 
 ## Installation
 Change to root user (if necessary) and clone Git repository:
@@ -29,7 +29,7 @@ Change to root user (if necessary) and clone Git repository:
 cd ~
 git clone https://github.com/githubapnic/Ubuntu.git
 ```
-Enter the new directory, change variables , update permissions, and run setup_rpki_workshop.sh, answer the questions:
+Enter the new directory, change variables , update permissions, and run setup_routing_workshop.sh, answer the questions:
 ```
 cd ~/Ubuntu/workshops/mpls
 vi setup_mpls_workshop.sh
@@ -37,18 +37,13 @@ chmod 744 setup_mpls_workshop.sh
 sudo ./setup_mpls_workshop.sh
 ```
 
+## Topology diagram
+![topology diagram](images/topology_diagram.png)
+
 ## Troubleshooting
 There is an install.log file. To view the file when running the script
 ```
 tail -f install.log
 ```
-# To start the mpls workshop lab
-```
-cd ~/Documents/scripts
-screen
-
-# detach from the dynagen screen
-press ctrl+a d 
-
-```
-
+## Acknowledgement
+The topology file is based on the workshop material by Dr. Philip Smith available at [BGP4ALL](http://www.bgp4all.com/dokuwiki/workshops/start) under a Creative Commons Attribution-Share Alike 4.0 International. Full terms at https://creativecommons.org/licenses/by-nc-nd/4.0
