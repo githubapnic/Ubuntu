@@ -11,7 +11,7 @@
 ##########################################
 
 CURRENT_DIR=$(pwd)
-WORKSHOP_DYNAMIPS_DIR="$HOME/virtual_labs/routing"
+WORKSHOP_DYNAMIPS_DIR="$HOME/virtual_labs/mpls"
 SCRIPT_DIR="$HOME/Documents/scripts/"
 IMAGE_DIR="$HOME/virtual_labs/images"
 LOG_FILE="install.log"
