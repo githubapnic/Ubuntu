@@ -1,1 +1,243 @@
-Topology File
+# APNIC MPLS Workshop Lab
+
+model = 7200
+
+[localhost]
+#[192.168.0.10]
+
+  
+   [[7200]]
+        image = c7200-advipservicesk9-mz.152-4.S3.image 
+        ram = 176
+        npe = npe-400
+        ghostios = True
+
+#idlepc= 0x6082a1f0
+#idlepc=  0x608a1538
+#idlepc=  0x608a1358
+#idlepc=  0x608c5bc8
+#idlepc=0x60608f64
+#idlepc=0x6316a604
+idlepc=0x63178d9c
+
+    [[ethsw SW1]]
+        1 = access 1
+        2 = access 1
+        3 = access 1
+        4 = access 1
+                
+    [[ethsw SW2]]
+        1 = access 1
+        2 = access 1
+        3 = access 1
+        4 = access 1
+
+    [[ethsw SW3]]
+        1 = access 11
+        2 = access 12
+        3 = access 13
+        4 = access 14
+        5 = access 15
+        6 = access 16
+        7 = access 17
+        8 = access 18
+        9 = access 19
+        10 = access 20
+        11 = access 21
+        12 = access 22
+        13 = access 23
+        14 = access 24
+        15 = access 25
+        16 = access 26
+        17 = access 27
+        18 = access 28
+        19 = access 29
+        20 = access 30
+        
+    [[ROUTER R1]]
+        console = 2001
+        aux = 3001
+        f0/0 = R13 f0/1
+        slot1 = PA-4E
+        e1/0 = R2 e1/0
+        e1/1 = R3 e1/1
+        cnfg = configs/R1.cfg
+        
+    [[ROUTER R2]]
+        console = 2002
+        aux = 3002
+        f0/0 = SW1 1
+        f0/1 = SW2 1
+        slot1 = PA-4E
+        e1/1 = R3 e1/0
+        e1/3 = SW3 1 
+        cnfg = configs/R2.cfg
+                
+    [[ROUTER R3]]
+        console = 2003
+        aux = 3003
+        f0/0 = R14 f0/1
+        slot1 = PA-4E
+        cnfg = configs/R3.cfg
+                
+    [[ROUTER R4]]
+        console = 2004
+        aux = 3004
+        f0/0 = R15 f0/1
+        slot1 = PA-4E
+        e1/0 = R5 e1/0
+        e1/1 = R6 e1/1
+        cnfg = configs/R4.cfg
+        
+    [[ROUTER R5]]
+        console = 2005
+        aux = 3005
+        f0/0 = SW1 2
+        f0/1 = SW2 2
+        slot1 = PA-4E
+        e1/1 = R6 e1/0
+#       e1/2 = NIO_gen_eth:en0
+        e1/3 = SW3 2
+        cnfg = configs/R5.cfg
+        
+    [[ROUTER R6]]
+        console = 2006
+        aux = 3006
+        f0/0 = R16 f0/1
+        slot1 = PA-4E
+        cnfg = configs/R6.cfg
+                
+    [[ROUTER R7]]
+        console = 2007
+        aux = 3007
+        f0/0 = R17 f0/1
+        slot1 = PA-4E
+        e1/0 = R8 e1/0
+        e1/1 = R9 e1/1
+        cnfg = configs/R7.cfg
+        
+    [[ROUTER R8]]
+        console = 2008
+        aux = 3008
+        f0/0 = SW1 3
+        f0/1 = SW2 3
+        slot1 = PA-4E
+        e1/1 = R9 e1/0
+        e1/3 = SW3 3
+        cnfg = configs/R8.cfg
+        
+    [[ROUTER R9]]
+        console = 2009
+        aux = 3009
+        f0/0 = R18 f0/1
+        slot1 = PA-4E
+        cnfg = configs/R9.cfg
+               
+    [[ROUTER R10]]
+        console = 2010
+        aux = 3010
+        f0/0 = R19 f0/1
+        slot1 = PA-4E
+        e1/0 = R11 e1/0
+        e1/1 = R12 e1/1
+        cnfg = configs/R10.cfg
+        
+#[localhost:7200]
+#[192.168.0.10:7201]
+
+#        [[7200]]
+#        image = c7200-advipservicesk9-mz.152-4.S3.image 
+#        ram = 176
+#        npe = npe-400
+#        ghostios = True
+
+#idlepc= 0x6082a1f0
+#idlepc=   0x608a1538
+#idlepc=  0x608a1358
+#idlepc=  0x608a1350
+#idlepc=  0x608c5bc8
+#idlepc=0x60608f64
+#idlepc=0x6316a604
+#idlepc=0x63178d9c
+   
+    [[ROUTER R11]]
+        console = 2011
+        aux = 3011
+        f0/0 = SW1 4
+        f0/1 = SW2 4
+        slot1 = PA-4E
+        e1/1 = R12 e1/0
+#       e1/2 = NIO_gen_eth:en0
+        e1/3 = SW3 4
+        cnfg = configs/R11.cfg
+                
+    [[ROUTER R12]]
+        console = 2012
+        aux = 3012
+        f0/0 = R20 f0/1
+        slot1 = PA-4E
+        cnfg = configs/R12.cfg
+                    
+    [[ROUTER R13]]
+        console = 2013
+        aux = 3013
+        fa0/0 = SW3 5
+        slot1 = PA-4E
+        e1/1 = SW3 13
+        cnfg = configs/R13.cfg
+                
+    [[ROUTER R14]]
+        console = 2014
+        aux = 3014
+        fa0/0 = SW3 6
+        slot1 = PA-4E
+        e1/1 = SW3 14
+        cnfg = configs/R14.cfg
+                
+    [[ROUTER R15]]
+        console = 2015
+        aux = 3015
+        fa0/0 = SW3 7
+        slot1 = PA-4E
+        e1/1 = SW3 15
+        cnfg = configs/R15.cfg
+                
+    [[ROUTER R16]]
+        console = 2016
+        aux = 3016
+        fa0/0 = SW3 8
+        slot1 = PA-4E
+        e1/1 = SW3 16
+        cnfg = configs/R16.cfg
+                
+    [[ROUTER R17]]
+        console = 2017
+        aux = 3017
+        fa0/0 = SW3 9
+        slot1 = PA-4E
+        e1/1 = SW3 17
+        cnfg = configs/R17.cfg
+                
+    [[ROUTER R18]]
+        console = 2018
+        aux = 3018
+        fa0/0 = SW3 10
+        slot1 = PA-4E
+        e1/1 = SW3 18
+        cnfg = configs/R18.cfg
+                
+    [[ROUTER R19]]
+        console = 2019
+        aux = 3019
+        fa0/0 = SW3 11
+        slot1 = PA-4E
+        e1/1 = SW3 19
+        cnfg = configs/R19.cfg
+                
+    [[ROUTER R20]]
+        console = 2020
+        aux = 3020
+        fa0/0 = SW3 12
+        slot1 = PA-4E
+        e1/1 = SW3 20
+        cnfg = configs/R20.cfg
