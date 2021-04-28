@@ -1,0 +1,339 @@
+# BGP Ops Lab
+
+model = 7200
+
+[localhost:7200]
+  udp = 40100
+
+  [[7200]]
+      image = c7200-advipservicesk9-mz.152-4.S3.image
+      ram = 176
+      npe = npe-400
+      slot1 = PA-4E
+      ghostios = True
+      idlepc=0x63178d9c
+
+#For Tranit
+  [[ethsw S1]]
+        1 = access 1
+        2 = access 1
+        3 = access 1
+        4 = access 1
+        5 = access 1
+        6 = access 1
+        7 = access 1
+        8 = access 1
+        9 = access 1
+        10 = access 1
+        11 = access 1
+        12 = access 1
+        13 = access 1
+        14 = access 1
+        15 = access 1
+        16 = access 1
+  
+#For Peers
+  [[ethsw S2]]
+        1 = access 1
+        2 = access 1
+        3 = access 1
+        4 = access 1
+        5 = access 1
+        6 = access 1
+        7 = access 1
+        8 = access 1
+        9 = access 1
+        10 = access 1
+        11 = access 1
+        12 = access 1
+        13 = access 1
+        14 = access 1
+        15 = access 1
+
+#For Downstream Customer
+  [[ethsw S3]]
+        1 = access 1
+        2 = access 1
+        3 = access 1
+        4 = access 1
+        5 = access 1
+        6 = access 1
+        7 = access 1
+        8 = access 1
+        9 = access 1
+        10 = access 1
+        11 = access 1
+        12 = access 1
+        13 = access 1
+        14 = access 1
+        15 = access 1
+        16 = access 1
+
+  [[ROUTER tr1]]
+      console = 2040
+      aux = 3040
+      fa0/0 = S1 16
+      model = 7200
+      cnfg = ./config/tr1.cfg
+
+  [[ROUTER cus1]]
+      console = 2050
+      aux = 3050
+      fa0/0 = S3 16
+      model = 7200
+      cnfg = ./config/cus1.cfg
+
+  [[ROUTER br1]]
+      console = 2001
+      aux = 3001
+      f0/0 = cr1 fa0/0
+      E1/0 = S1 1
+      E1/1 = S2 1
+      E1/2 = S3 1
+      model = 7200
+      cnfg = ./config/br1.cfg
+
+  [[ROUTER cr1]]
+      console = 2021
+      aux = 3021
+      fa0/0 = br1 fa0/0
+      model = 7200
+      cnfg = ./config/cr1.cfg
+  
+  [[ROUTER br2]]
+      console = 2002
+      aux = 3002
+      f0/0 = cr2 fa0/0
+      E1/0 = S1 2
+      E1/1 = S2 2
+      E1/2 = S3 2
+      model = 7200
+      cnfg = ./config/br2.cfg
+
+  [[ROUTER cr2]]
+      console = 2022
+      aux = 3022
+      fa0/0 = br2 fa0/0
+      model = 7200
+      cnfg = ./config/cr2.cfg
+
+  [[ROUTER br3]]
+      console = 2003
+      aux = 3003
+      f0/0 = cr3 fa0/0
+      E1/0 = S1 3
+      E1/1 = S2 3
+      E1/2 = S3 3
+      model = 7200
+      cnfg = ./config/br3.cfg
+
+  [[ROUTER cr3]]
+      console = 2023
+      aux = 3023
+      fa0/0 = br3 fa0/0
+      model = 7200
+      cnfg = ./config/cr3.cfg
+          
+  [[ROUTER br4]]
+      console = 2004
+      aux = 3004
+      f0/0 = cr4 fa0/0
+      E1/0 = S1 4
+      E1/1 = S2 4
+      E1/2 = S3 4
+      model = 7200
+      cnfg = ./config/br4.cfg
+
+  [[ROUTER cr4]]
+      console = 2024
+      aux = 3024
+      fa0/0 = br4 fa0/0
+      model = 7200
+      cnfg = ./config/cr4.cfg
+          
+  [[ROUTER br5]]
+      console = 2005
+      aux = 3005
+      f0/0 = cr5 fa0/0
+      E1/0 = S1 5
+      E1/1 = S2 5
+      E1/2 = S3 5
+      model = 7200
+      cnfg = ./config/br5.cfg
+
+  [[ROUTER cr5]]
+      console = 2025
+      aux = 3025
+      fa0/0 = br5 fa0/0
+      model = 7200
+      cnfg = ./config/cr5.cfg
+          
+  [[ROUTER br6]]
+      console = 2006
+      aux = 3006
+      f0/0 = cr6 fa0/0
+      E1/0 = S1 6
+      E1/1 = S2 6
+      E1/2 = S3 6
+      model = 7200
+      cnfg = ./config/br6.cfg
+
+  [[ROUTER cr6]]
+      console = 2026
+      aux = 3026
+      fa0/0 = br6 fa0/0
+      model = 7200
+      cnfg = ./config/cr6.cfg
+          
+  [[ROUTER br7]]
+      console = 2007
+      aux = 3007
+      f0/0 = cr7 fa0/0
+      E1/0 = S1 7
+      E1/1 = S2 7
+      E1/2 = S3 7
+      model = 7200
+      cnfg = ./config/br7.cfg
+
+  [[ROUTER cr7]]
+      console = 2027
+      aux = 3027
+      fa0/0 = br7 fa0/0
+      model = 7200
+      cnfg = ./config/cr7.cfg
+          
+  [[ROUTER br8]]
+      console = 2008
+      aux = 3008
+      f0/0 = cr8 fa0/0
+      E1/0 = S1 8
+      E1/1 = S2 8
+      E1/2 = S3 8
+      model = 7200
+      cnfg = ./config/br8.cfg
+
+  [[ROUTER cr8]]
+      console = 2028
+      aux = 3028
+      fa0/0 = br8 fa0/0
+      model = 7200
+      cnfg = ./config/cr8.cfg
+          
+  [[ROUTER br9]]
+      console = 2009
+      aux = 3009
+      f0/0 = cr9 fa0/0
+      E1/0 = S1 9
+      E1/1 = S2 9
+      E1/2 = S3 9
+      model = 7200
+      cnfg = ./config/br9.cfg
+
+  [[ROUTER cr9]]
+      console = 2029
+      aux = 3029
+      fa0/0 = br9 fa0/0
+      model = 7200
+      cnfg = ./config/cr9.cfg
+          
+   [[ROUTER br10]]
+      console = 2010
+      aux = 3010
+      f0/0 = cr10 fa0/0
+      E1/0 = S1 10
+      E1/1 = S2 10
+      E1/2 = S3 10
+      model = 7200
+      cnfg = ./config/br10.cfg
+
+  [[ROUTER cr10]]
+      console = 2030
+      aux = 3030
+      fa0/0 = br10 fa0/0
+      model = 7200
+      cnfg = ./config/cr10.cfg
+          
+  [[ROUTER br11]]
+      console = 2011
+      aux = 3011
+      f0/0 = cr11 fa0/0
+      E1/0 = S1 11
+      E1/1 = S2 11
+      E1/2 = S3 11
+      model = 7200
+      cnfg = ./config/br11.cfg
+
+  [[ROUTER cr11]]
+      console = 2031
+      aux = 3031
+      fa0/0 = br11 fa0/0
+      model = 7200
+      cnfg = ./config/cr11.cfg
+          
+  [[ROUTER br12]]
+      console = 2012
+      aux = 3012
+      f0/0 = cr12 fa0/0
+      E1/0 = S1 12
+      E1/1 = S2 12
+      E1/2 = S3 12
+      model = 7200
+      cnfg = ./config/br12.cfg
+
+  [[ROUTER cr12]]
+      console = 2032
+      aux = 3032
+      fa0/0 = br12 fa0/0
+      model = 7200
+      cnfg = ./config/cr12.cfg
+          
+  [[ROUTER br13]]
+      console = 2013
+      aux = 3013
+      f0/0 = cr13 fa0/0
+      E1/0 = S1 13
+      E1/1 = S2 13
+      E1/2 = S3 13
+      model = 7200
+      cnfg = ./config/br13.cfg
+
+  [[ROUTER cr13]]
+      console = 2033
+      aux = 3033
+      fa0/0 = br13 fa0/0
+      model = 7200
+      cnfg = ./config/cr13.cfg
+  
+  [[ROUTER br14]]
+      console = 2014
+      aux = 3014
+      f0/0 = cr14 fa0/0
+      E1/0 = S1 14
+      E1/1 = S2 14
+      E1/2 = S3 14
+      model = 7200
+      cnfg = ./config/br14.cfg
+
+  [[ROUTER cr14]]
+      console = 2034
+      aux = 3034
+      fa0/0 = br14 fa0/0
+      model = 7200
+      cnfg = ./config/cr14.cfg
+          
+  [[ROUTER br15]]
+      console = 2015
+      aux = 3015
+      f0/0 = cr15 fa0/0
+      E1/0 = S1 15
+      E1/1 = S2 15
+      E1/2 = S3 15
+      model = 7200
+      cnfg = ./config/br15.cfg
+
+  [[ROUTER cr15]]
+      console = 2035
+      aux = 3035
+      fa0/0 = br15 fa0/0
+      model = 7200
+      cnfg = ./config/cr15.cfg
