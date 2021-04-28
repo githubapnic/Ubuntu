@@ -19,7 +19,7 @@ https://www.cisco.com/c/en/us/support/routers/7200-series-routers/tsd-products-s
 * Install Dynamips
 * Install Dynagen
 * Enable IPv6 and IPv4 Forwarding
-* Copy dynamips routing toplogy files to virtual_labs folder
+* Copy dynamips bgpopsrouting toplogy files to virtual_labs folder
 * Configure post-routing rules [optional]
 * Add iptable rules [optional]
 
@@ -31,14 +31,11 @@ git clone https://github.com/githubapnic/Ubuntu.git
 ```
 Enter the new directory, change variables , update permissions, and run setup_routing_workshop.sh, answer the questions:
 ```
-cd ~/Ubuntu/workshops/mpls
+cd ~/Ubuntu/workshops/bgpop
 vi setup_bgp_opsec_workshop.sh
 chmod 744 setup_bgp_opsec_workshop.sh
 sudo ./setup_bgp_opsec_workshop.sh
 ```
-
-## Topology diagram
-![topology diagram](images/topology_diagram.png)
 
 ## Troubleshooting
 There is an install.log file. To view the file when running the script
