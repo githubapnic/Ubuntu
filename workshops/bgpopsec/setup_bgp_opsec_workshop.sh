@@ -11,7 +11,7 @@
 ##########################################
 
 CURRENT_DIR=$(pwd)
-WORKSHOP_DYNAMIPS_DIR="$HOME/virtual_labs/routing"
+WORKSHOP_DYNAMIPS_DIR="$HOME/virtual_labs/bgpops"
 SCRIPT_DIR="$HOME/Documents/scripts/"
 IMAGE_DIR="$HOME/virtual_labs/images"
 LOG_FILE="install.log"
@@ -118,10 +118,10 @@ function enableForwarding()
   sysctl -p /etc/sysctl.conf | tee -a $LOG_FILE
 }
 
-# Copy the files to the routing dynamips folder
+# Copy the files to the bgpops dynamips folder
 function setupDynamips()
 {
-  echo "###### Copy routing topology files" | tee -a $LOG_FILE
+  echo "###### Copy bgpops topology files" | tee -a $LOG_FILE
   mkdir -p $WORKSHOP_DYNAMIPS_DIR $IMAGE_DIR >> $LOG_FILE
   chown -R $SUDO_USER:$SUDO_USER $IMAGE_DIR >> $LOG_FILE
   cp -R dynamips/* $WORKSHOP_DYNAMIPS_DIR/. >> $LOG_FILE
