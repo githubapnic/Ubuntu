@@ -1,6 +1,8 @@
+![](images/apnic_logo.png)
+
 # LAB :: Use Shodan.io to research TLS
 * In this example we are using apnictraining.net as domain name.
-* # super user command.
+* \# super user command.
 * $ normal user command.
 * Username `apnic` and password `training`.
 
@@ -28,7 +30,7 @@ Step 2: Create an account on Shodan.io and generate API key
 Step 3: Research TLS deployments
 Step 4: Review TLS settings for a website
 
-## Requirements
+### <a name="fenced-code-block">Requirements</a>
 1. Login to the server:
 ```bash
 ssh apnic@192.168.30.XX
