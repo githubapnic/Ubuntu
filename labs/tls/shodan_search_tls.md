@@ -120,7 +120,9 @@ nmap --script ssl-cert -p 443 wiki.apnictraining.net
 ```
 **Note**: For more detail about nmap scripts. Refer to:
 [https://nmap.org/nsedoc/scripts/](https://nmap.org/nsedoc/scripts/)
+
 [https://nmap.org/nsedoc/scripts/ssl-enum-ciphers.html](https://nmap.org/nsedoc/scripts/ssl-enum-ciphers.html)
+
 [https://nmap.org/nsedoc/scripts/ssl-cert.html](https://nmap.org/nsedoc/scripts/ssl-cert.html)
 
 **HINT**: To display the supported MACs (Message Authentication Code), Ciphers, Key length and KexAlogrithms supported by SSH on the local system
