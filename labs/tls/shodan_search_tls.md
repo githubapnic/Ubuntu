@@ -1,4 +1,6 @@
-![](images/apnic_logo.png)
+![apnic](images/apnic_logo.png)
+
+
 
 # LAB :: Use Shodan.io to research TLS
 * In this example we are using apnictraining.net as domain name.
