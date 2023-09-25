@@ -1,7 +1,5 @@
 ![apnic](images/apnic_logo.png)
 
-
-
 # LAB :: Use Shodan.io to research TLS
 * In this example we are using apnictraining.net as domain name.
 * \# super user command.
@@ -51,8 +49,14 @@ sudo apt install -y python python3 python-setuptools python3-setuptools python-p
 sudo pip install shodan
 ```
 2. In a browser register an account at http://account.shodan.io/register
-3. Click on Account to see a quick response (QR) code and the Application Programming Interface (API) key
-4. Return to the VM and initialise shodan API key
+
+![shodan registration](images/01_image.png)
+
+4. Click on Account to see a quick response (QR) code and the Application Programming Interface (API) key
+
+![API key](images/02_image.png)
+
+6. Return to the VM and initialise shodan API key
 ```bash
 shodan init <Your API Key>
 ```
@@ -161,4 +165,6 @@ cd testssl.sh/
 # Testing for both at the same time
 ./testssl.sh --crime --heartbleed wiki.apnictraining.net
 ```
+![testssl](images/testssl.png)
+
 **END OF EXERCISE**
