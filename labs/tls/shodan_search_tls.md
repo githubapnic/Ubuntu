@@ -82,11 +82,13 @@ shodan stats --facets vuln.verified https
 ```
 
 9. To query by facets in a web browser, try opening the following urls.
-[https://beta.shodan.io/search/facet?query=port%3A443&facet=ssl.version](https://beta.shodan.io/search/facet?query=port%3A443&facet=ssl.version)
+   
+[https://beta.shodan.io/search/facet?query=port%3A443&facet=ssl.version](https://beta.shodan.io/search/facet?query=port%3A443&facet=ssl.version) <br>
 [https://beta.shodan.io/search/facet?query=ssl.version%3Atlsv1&facet=vuln.verified](https://beta.shodan.io/search/facet?query=ssl.version%3Atlsv1&facet=vuln.verified)
 
-10. To find out details about Common Vulnerabilities and Exposures (CVE), do some research on CVE-2021-26858 , try opening the following urls.
-[https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-26858](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-26858)
+11. To find out details about Common Vulnerabilities and Exposures (CVE), do some research on CVE-2021-26858 , try opening the following urls.
+
+[https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-26858](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-26858) <br>
 [https://www.google.com/search?q=cve-2021-26858](https://www.google.com/search?q=cve-2021-26858)
 
 ## Review TLS settings for a website
@@ -111,18 +113,18 @@ openssl s_client -connect wiki.apnictraining.net:443 </dev/null | grep Cipher
 ```
 
 5. Open a web browser and do a search for the cipher that is in use. For example to locate details about `TLS_AES_256_GCM_SHA384` try the following url.
+6. 
 [https://ciphersuite.info/search/?q=TLSAES256GCMSHA384&cat=cs](https://ciphersuite.info/search/?q=TLSAES256GCMSHA384&cat=cs)
 
-6. Use nmap to show all the supported ciphers and the certificate of the website, by typing the following commands:
+7. Use nmap to show all the supported ciphers and the certificate of the website, by typing the following commands:
 ```bash
 nmap --script ssl-enum-ciphers -p 443 wiki.apnictraining.net
 nmap --script ssl-cert -p 443 wiki.apnictraining.net
 ```
 **Note**: For more detail about nmap scripts. Refer to:
-[https://nmap.org/nsedoc/scripts/](https://nmap.org/nsedoc/scripts/)
 
-[https://nmap.org/nsedoc/scripts/ssl-enum-ciphers.html](https://nmap.org/nsedoc/scripts/ssl-enum-ciphers.html)
-
+[https://nmap.org/nsedoc/scripts/](https://nmap.org/nsedoc/scripts/) <br>
+[https://nmap.org/nsedoc/scripts/ssl-enum-ciphers.html](https://nmap.org/nsedoc/scripts/ssl-enum-ciphers.html) <br>
 [https://nmap.org/nsedoc/scripts/ssl-cert.html](https://nmap.org/nsedoc/scripts/ssl-cert.html)
 
 **HINT**: To display the supported MACs (Message Authentication Code), Ciphers, Key length and KexAlogrithms supported by SSH on the local system
