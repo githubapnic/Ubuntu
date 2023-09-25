@@ -7,7 +7,7 @@
 * Username `apnic` and password `training`.
 
 ## Topology
-Download the repo and change the permissions on all the shell scripts to allow it to be run. eg:
+
 ``` bash
 [group1.apnictraining.net] [192.168.30.1]
 [group2.apnictraining.net] [192.168.30.2]
