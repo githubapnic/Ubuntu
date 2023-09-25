@@ -113,7 +113,7 @@ openssl s_client -connect wiki.apnictraining.net:443 </dev/null | grep Cipher
 ```
 
 5. Open a web browser and do a search for the cipher that is in use. For example to locate details about `TLS_AES_256_GCM_SHA384` try the following url.
-6. 
+
 [https://ciphersuite.info/search/?q=TLSAES256GCMSHA384&cat=cs](https://ciphersuite.info/search/?q=TLSAES256GCMSHA384&cat=cs)
 
 7. Use nmap to show all the supported ciphers and the certificate of the website, by typing the following commands:
