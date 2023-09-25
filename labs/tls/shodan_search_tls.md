@@ -1,6 +1,6 @@
 ![apnic](images/apnic_logo.png)
 
-# LAB :: Use Shodan.io to research TLS
+# LAB: Research TLS using Shodan and other tools
 * In this example we are using apnictraining.net as domain name.
 * \# super user command.
 * $ normal user command.
