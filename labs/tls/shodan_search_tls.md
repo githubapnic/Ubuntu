@@ -25,9 +25,9 @@ In this lab you utilise various tools to research the versions of SSL and TLS th
 Usage of all tools in this lab for profiling SSL and TLS on websites or targets without prior mutual consent is illegal. It is your responsibility to obey all applicable local, state and federal laws. APNIC assume no liability and are not responsible for any misuse or damage caused by the materal in this lab.
 
 # Lab Tasks
-Step 1: Install Shodan CLI
-Step 2: Create an account on Shodan.io and generate API key
-Step 3: Research TLS deployments
+Step 1: Install Shodan CLI <br>
+Step 2: Create an account on Shodan.io and generate API key <br>
+Step 3: Research TLS deployments <br>
 Step 4: Review TLS settings for a website
 
 ### <a name="fenced-code-block">Requirements</a>
