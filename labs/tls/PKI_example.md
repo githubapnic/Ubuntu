@@ -38,7 +38,7 @@ Step 5: Bob decrypts Alice’s message using his private key.<br>
 
 	password is `training`
 
-2. Install a openssl
+2. Install openssl
 
 		sudo apt-get update
 		sudo apt-get install -y openssl
