@@ -98,10 +98,7 @@ Step 5: Bob decrypts Alice’s message using his private key.<br>
 
 2. Encrypt the message with Bob's public key.
 
-		openssl rsautl -encrypt -pubin -inkey bob_rsa.pub -in \
-		message.txt -out message.enc
-
-	[**NOTE**: This command should be on 1 line. Remove the `\` ]  
+		openssl rsautl -encrypt -pubin -inkey bob_rsa.pub -in message.txt -out message.enc
 
 3. Share the encrypted message with Bob.
 
