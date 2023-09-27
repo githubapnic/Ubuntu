@@ -58,8 +58,7 @@ Step 3: Enable SSL and configure Apache with the certificate<br>
 	
 2. Update the `/etc/hosts` file, to allow the use of the Fully Qualified Domain Name (FQDN) of `groupXX.apnictraining.net` [replace `XX` with your group number].
 
-		sudo sed -i '/^127.0.0.1/a 127.0.0.1\tgroupXX\t groupXX.apnictraining.net' \
-		/etc/hosts
+		sudo sed -i '/^127.0.0.1/a 127.0.0.1\tgroupXX\t groupXX.apnictraining.net' /etc/hosts
 		
 ![](images/03_image.png)
 		
@@ -86,9 +85,7 @@ Step 3: Enable SSL and configure Apache with the certificate<br>
 
 2. Create a self-signed certificate using openssl [replace `XX` with your group number]:<br>
    
-		openssl req -new -x509 -sha256 -newkey \ 
-		rsa:2048 -nodes -keyout groupXX.key.pem \
-		-days 365 -out groupXX.cert.pem
+		openssl req -new -x509 -sha256 -newkey rsa:2048 -nodes -keyout groupXX.key.pem -days 365 -out groupXX.cert.pem
 
 	```markup
 	Country Name (2 letter code) [AU]: AU
@@ -144,10 +141,8 @@ Step 3: Enable SSL and configure Apache with the certificate<br>
 	```
 	cd /etc/apache2/sites-available/
 	cat default-ssl.conf | grep ssl-cert-snakeoil
-	sudo sed -i 's/certs\/ssl-cert-snakeoil.pem/groupXX.cert.pem/' \ 
-	default-ssl.conf
-	sudo sed -i 's/private\/ssl-cert-snakeoil.key/groupXX.key.pem/' \ 
-	default-ssl.conf
+	sudo sed -i 's/certs\/ssl-cert-snakeoil.pem/groupXX.cert.pem/' default-ssl.conf
+	sudo sed -i 's/private\/ssl-cert-snakeoil.key/groupXX.key.pem/' default-ssl.conf
 	sudo cp default-ssl.conf ../sites-enabled/.
 	``` 
 
@@ -204,9 +199,7 @@ Step 3: Enable SSL and configure Apache with the certificate<br>
 9. To view the downloaded certificate, type the following [replace `XX` with your group number]:
 
 	``` 
-	echo | openssl s_client -showcerts  -servername groupXX.apnictraining.net \
-	-connect groupXX.apnictraining.net:443 \
-	2>/dev/null | openssl x509 -inform pem -noout -text 
+	echo | openssl s_client -showcerts  -servername groupXX.apnictraining.net -connect groupXX.apnictraining.net:443 2>/dev/null | openssl x509 -inform pem -noout -text 
 	```
 
 ![](images/10_image.png)
