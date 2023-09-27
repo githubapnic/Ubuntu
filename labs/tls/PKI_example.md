@@ -23,11 +23,10 @@
 In this lab you will generate a self-signed SSL certificate and apply it to an apache webserver.
 
 ## Lab Tasks
-Step 1: Install required software
-Step 2: Alice and Bob create their own private and public keys.
-Step 3: Bob sends Alice his public key.
-Step 4: Alice encrypts the message using Bob’s public key and
-sends it to Bob.
+Step 1: Install required software<br>
+Step 2: Alice and Bob create their own private and public keys.<br>
+Step 3: Bob sends Alice his public key.<br>
+Step 4: Alice encrypts the message using Bob’s public key and sends it to Bob.<br>
 Step 5: Bob decrypts Alice’s message using his private key.<br>
 
 ### <a name="fenced-code-block">Step 1</a>
