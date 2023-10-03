@@ -20,7 +20,7 @@
 	......
 	[group30.apnictraining.net] [192.168.30.30]  
 
-In this lab you will generate a self-signed SSL certificate and apply it to an apache webserver.
+In this lab you will manually create a private and public key. Then encrypt and decrypt a message.
 
 ## Lab Tasks
 Step 1: Install required software<br>
